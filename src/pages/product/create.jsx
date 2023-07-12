@@ -8,11 +8,11 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-function CreateProduct() { 
+function CreateProduct() {
   const { id_company } = useParams();
 
   useEffect(() => {
-    getCompanyById()
+    getCompanyById();
   }, []);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -20,28 +20,30 @@ function CreateProduct() {
   const [desc_company, setDescName] = useState("");
   const [team, setTeam] = useState("");
 
-
   const getCompanyById = async () => {
     try {
-     const response = await axios.get(`api/v1/company/${id_company}`);
-     console.log("Response", response);
-      
+      const response = await axios.get(`api/v1/company/${id_company}`);
+      console.log("Response", response);
     } catch (error) {
       console.log("error", error);
     }
-  }
+  };
 
   const updateCompany = async (e) => {
     e.preventDefault();
     const navigate = useNavigate();
     try {
-      const a = await axios.put(`api/v1/updateCompany/${id_company}`, {name_company, desc_company, team});
+      const a = await axios.put(`api/v1/updateCompany/${id_company}`, {
+        name_company,
+        desc_company,
+        team,
+      });
       console.log("a", a);
-      navigate('/')
+      navigate("/");
     } catch (error) {
       console.log("error", error);
     }
-  }
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -63,49 +65,53 @@ function CreateProduct() {
             <div className="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
               <div className="p-3">
                 {/* Table */}
-                
+
                 <Form onSubmit={updateCompany}>
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group controlId="formFile" className="mb-3">
+                      <Form.Label>Tambahkan foto produk</Form.Label>
+                      <Form.Control type="file" />
+                    </Form.Group>
 
-                        <Form.Label>Nama Product</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={name_company}
-                          name="name_company"
-                          onChange={ (e) => setName(e.target.value)}
-                          placeholder="Enter"
-                        />
-                      </Form.Group>
+                    <Form.Label>Nama Product</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={name_company}
+                      name="name_company"
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
 
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Harga Product</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={desc_company}
-                          name="desc_company"
-                          onChange={ (e) => setDescName(e.target.value)}
-                          placeholder="Enter"
-                        />
-                      </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Harga Product</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={desc_company}
+                      name="desc_company"
+                      onChange={(e) => setDescName(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
 
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Deskripsi Product</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={team}
-                          name="team"
-                          onChange={ (e) => setTeam(e.target.value)}
-                          placeholder="Enter"
-                        />
-                      </Form.Group>
-                      <Button
-                  variant="primary"
-                  type="submit"
-                  className="bg-primary"
-                >
-                  Buat data product
-                </Button>
-                    </Form>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Deskripsi Product</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={team}
+                      name="team"
+                      onChange={(e) => setTeam(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="bg-primary"
+                  >
+                    Buat data product
+                  </Button>
+                </Form>
               </div>
             </div>
 

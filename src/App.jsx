@@ -28,6 +28,7 @@ import Login from './pages/login_user';
 import LoginAdmin from './pages/login_admin';
 import Pesanan from './pages/../pagesClients/Hasil/Pesanan';
 import ClientPage from '../src/pagesClients/index'
+import AddProduk from '../src/pages/product/create'
 
 
 function App() {
@@ -54,6 +55,11 @@ function App() {
         <Route exact path='/signup-admin' element={<SignupAdmin />} />
         <Route exact path='/login' element={<Login />} />
         <Route exact path='/login-admin' element={<LoginAdmin />} />
+
+
+        <Route exact path='/tambah-produk' element={<AddProduk />} />
+
+
 
 
 
