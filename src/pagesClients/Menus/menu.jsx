@@ -10,7 +10,7 @@ function numberWithComas(x) {
   }
 
 
-const menu = ({menus, masukKeranjang }) => {
+const menu = ({menus, masukKeranjang, onClick }) => {
   return (
         <Col md={4} xs={6}>
         <Card className='shadow mb-5' onClick={() => masukKeranjang(menus)}>

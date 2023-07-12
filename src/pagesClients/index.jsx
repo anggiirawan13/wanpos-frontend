@@ -3,29 +3,31 @@ import Navbar from "./Navbar/index";
 import { Col, Container, Row } from "react-bootstrap";
 import Menus from "../pagesClients/Menus/menu";
 import swal from "sweetalert";
+import Card from 'react-bootstrap/Card';
+import Rotibakar from '../images/rotiBakar1.png';
+import Button from 'react-bootstrap/Button';
+
+
 
 import Hasil from "./Hasil/hasil";
 import axios, { Axios } from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Storage from "../../src/Storage/storage";
 import { Link } from "react-router-dom";
 
 
+
 export default class DaftarMenu extends Component {
-
   constructor(props) {
-
     super(props);
     this.state = {
       menus: [],
       keranjangs: [],
       id_user: "",
     };
-
   }
 
   componentDidMount() {
-    
     axios
       .get(`api/v1/listProduct`)
       .then((res) => {
@@ -35,86 +37,9 @@ export default class DaftarMenu extends Component {
       .catch((error) => {
         console.log(error);
       });
-
-    axios.get(`/api/v1/checkout/${Storage.get("user_id").data}`).then((res) => {
-      this.getListKeranjang();
-    });
-
-
   }
 
-  getListKeranjang = () => {
-    axios
-      .get(`/api/v1/checkout/user/${Storage.get("user_id").data}`)
-      .then((res) => {
-        console.log("res keranjang", res);
-        const keranjangs = res.data.result;
-        this.setState({ keranjangs });
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
-
- 
-
-  masukKeranjang = (value) => {
-
-    axios.get(`/api/v1/checkout/${value.id_products}/${Storage.get('user_id').data}`).then((res) => {
-      console.log("resssss", res);
-
-      if ( res.data.result.length > 0 && Storage.get('user_id').data == res.data.result[0].user_id ) {
-        const jumlah = res.data.result[0].jumlah + 1;
-        const total_harga = res.data.result[0].total_harga + value.harga;
-        let id_products = value.id_products;
-        let user_id = Storage.get("user_id").data;
-
-        axios
-          .put(`/api/v1/checkout/${res.data.result[0].id_checkout}`, {
-            jumlah,
-            total_harga,
-            id_products,
-            user_id
-            })
-          .then((res) => {
-            this.getListKeranjang();
-            swal({
-              title: "Berhasil Menambahkan ke Keranjang!",
-              text: "Berhasil Masuk Keranjang " + value.name_products,
-              icon: "success",
-              timer: 1500
-            });
-          });
-      } else {
-
-        const jumlah = 1;
-        const total_harga = value.harga;
-        const id_products = value.id_products;
-        const user_id = Storage.get("user_id").data;
-
-        axios
-          .post("api/v1/checkout", {
-            jumlah,
-            total_harga,
-            id_products,
-            user_id
-          })
-          .then((res) => {
-            console.log("ressssd", res);
-            this.getListKeranjang();
-            swal({
-              title: "Berhasil Menambahkan ke Keranjang!",
-              text: "Berhasil Masuk Keranjang " + value.name_products,
-              icon: "success",
-              timer: 1500
-            });
-          })
-          .catch((error) => {
-            console.log("ini errornya s : ", error);
-          });
-      }
-    });
-  };
+  
   render() {
     const { menus, keranjangs } = this.state;
     return (
@@ -129,16 +54,36 @@ export default class DaftarMenu extends Component {
                 <hr />
               </h2>
               <Row>
-                {
-                menus &&
-                  menus.map((menu, index) => (
-                    <Menus
-                      key={menu.id_products}
-                      menus={menu}
-                      masukKeranjang={this.masukKeranjang}
-                    />
-                  ))
-                }
+                  { menus && menus.map((menu, index) => (
+                <Col md={4} xs={6}>
+
+                
+                  <Card
+                    className="shadow mb-5"
+                    onClick={() => ma}
+                  >
+                    <Card.Img variant="top" src={Rotibakar} />
+                    <Card.Body>
+                      <Card.Title>
+                        {menu.name_products} - {menu.kode}{" "}
+                      </Card.Title>
+                      <p className="dark:text-indigo-200 mb-2">
+                        {menu.desc_products}
+                      </p>
+                      <Card.Text>
+                        <>Rp.</>
+                      </Card.Text>
+                      <Card.Text>
+                        <p className="dark:text-indigo-200 mb-2">
+                          {" "}
+                          Stock Tersedia : {menu.stock}
+                        </p>
+                      </Card.Text>
+                      <Link to='/login' className="btn btn-primary" variant="primary">Beli Sekarang</Link>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                    ))}
               </Row>
             </Col>
           </Row>

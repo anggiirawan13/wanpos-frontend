@@ -18,6 +18,7 @@ import EditPerusahaan from './pages/informasiPerusahaan/edit';
 import Product from './pages/product/index';
 import EditProduct from './pages/product/edit';
 import CreateProduct from './pages/product/create';
+import KonfirmasiPesanan from '../src/pagesClients/Hasil/konfirmasi-v1'
 
 // Client
 import DaftarMenu from '../src/pagesClients/index-v1';
@@ -29,6 +30,7 @@ import LoginAdmin from './pages/login_admin';
 import Pesanan from './pages/../pagesClients/Hasil/Pesanan';
 import ClientPage from '../src/pagesClients/index'
 import AddProduk from '../src/pages/product/create'
+import Konfirmasi from '../src/pagesClients/Hasil/konfirmasi'
 
 
 function App() {
@@ -58,6 +60,8 @@ function App() {
 
 
         <Route exact path='/tambah-produk' element={<AddProduk />} />
+        <Route exact path='/konfirmasi' element={<Konfirmasi />} />
+        <Route exact path='/konfirmasi-pesanan' element={<KonfirmasiPesanan />} />
 
 
 
