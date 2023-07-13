@@ -15,6 +15,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Storage from "../../src/Storage/storage";
 import { Link } from "react-router-dom";
 
+import {API_URL} from '../../env.json'
+console.log(API_URL)
 
 
 export default class DaftarMenu extends Component {
@@ -33,6 +35,7 @@ export default class DaftarMenu extends Component {
       .then((res) => {
         const menus = res.data.result;
         this.setState({ menus });
+        console.log(menus);
       })
       .catch((error) => {
         console.log(error);
@@ -62,7 +65,7 @@ export default class DaftarMenu extends Component {
                     className="shadow mb-5"
                     onClick={() => ma}
                   >
-                    <Card.Img variant="top" src={Rotibakar} />
+                    <Card.Img variant="top" src={`${API_URL}/uploads/${menu.files}`} />
                     <Card.Body>
                       <Card.Title>
                         {menu.name_products} - {menu.kode}{" "}
@@ -71,7 +74,7 @@ export default class DaftarMenu extends Component {
                         {menu.desc_products}
                       </p>
                       <Card.Text>
-                        <>Rp.</>
+                        <>Rp. {menu.harga}</>
                       </Card.Text>
                       <Card.Text>
                         <p className="dark:text-indigo-200 mb-2">

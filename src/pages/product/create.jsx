@@ -4,44 +4,34 @@ import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import Banner from "../../partials/Banner";
 import Form from "react-bootstrap/Form";
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 function CreateProduct() {
-  const { id_company } = useParams();
-
-  useEffect(() => {
-    getCompanyById();
-  }, []);
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [name_company, setName] = useState("");
-  const [desc_company, setDescName] = useState("");
-  const [team, setTeam] = useState("");
-
-  const getCompanyById = async () => {
-    try {
-      const response = await axios.get(`api/v1/company/${id_company}`);
-      console.log("Response", response);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  const updateCompany = async (e) => {
+  let [sidebarOpen, setSidebarOpen] = useState(false);
+  let [kode, setKodeProduct] = useState("");
+  let [name_products, setNameProduct] = useState("");
+  let [desc_products, setDescProduct] = useState("");
+  let [variant, setVariantProduct] = useState("");
+  let [harga, setHarga] = useState("");
+  let [stock, setStockProduct] = useState("");
+  let [file, setFile] = useState(null);
+  
+  const createProduct = async (e) => {
     e.preventDefault();
-    const navigate = useNavigate();
     try {
-      const a = await axios.put(`api/v1/updateCompany/${id_company}`, {
-        name_company,
-        desc_company,
-        team,
-      });
-      console.log("a", a);
-      navigate("/");
+      let formData = new FormData();
+      formData.append("kode", kode);
+      formData.append("name_products", name_products);
+      formData.append("desc_products", desc_products);
+      formData.append("variant", variant);
+      formData.append("harga", harga);
+      formData.append("stock", stock);
+      formData.append("file", file);
+
+      await axios.post('api/v1/createProduct', formData)
+      .then((res) => console.log(res.data));
     } catch (error) {
-      console.log("error", error);
+      console.log("error", error.message);
     }
   };
 
@@ -66,30 +56,32 @@ function CreateProduct() {
               <div className="p-3">
                 {/* Table */}
 
-                <Form onSubmit={updateCompany}>
+                <Form onSubmit={createProduct}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Tambahkan foto produk</Form.Label>
-                      <Form.Control type="file" />
+                      <Form.Control type="file" accept="image/jpg,image/jpeg,image/png" onChange={(e) => setFile(e.target.files[0])}/>
                     </Form.Group>
-
-                    <Form.Label>Nama Product</Form.Label>
+                  </Form.Group>
+                  
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Kode Product</Form.Label>
                     <Form.Control
                       type="text"
-                      value={name_company}
-                      name="name_company"
-                      onChange={(e) => setName(e.target.value)}
+                      value={kode}
+                      name="kode"
+                      onChange={(e) => setKodeProduct(e.target.value)}
                       placeholder="Enter"
                     />
                   </Form.Group>
-
+                  
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Harga Product</Form.Label>
+                    <Form.Label>Nama Product</Form.Label>
                     <Form.Control
                       type="text"
-                      value={desc_company}
-                      name="desc_company"
-                      onChange={(e) => setDescName(e.target.value)}
+                      value={name_products}
+                      name="name_products"
+                      onChange={(e) => setNameProduct(e.target.value)}
                       placeholder="Enter"
                     />
                   </Form.Group>
@@ -98,12 +90,46 @@ function CreateProduct() {
                     <Form.Label>Deskripsi Product</Form.Label>
                     <Form.Control
                       type="text"
-                      value={team}
-                      name="team"
-                      onChange={(e) => setTeam(e.target.value)}
+                      value={desc_products}
+                      name="desc_products"
+                      onChange={(e) => setDescProduct(e.target.value)}
                       placeholder="Enter"
                     />
                   </Form.Group>
+                  
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Variant Product</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={variant}
+                      name="variant"
+                      onChange={(e) => setVariantProduct(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Harga Product</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={harga}
+                      name="harga"
+                      onChange={(e) => setHarga(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Stock Product</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={stock}
+                      name="stock"
+                      onChange={(e) => setStockProduct(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
+                  
                   <Button
                     variant="primary"
                     type="submit"

@@ -55,7 +55,6 @@ function Dashboard() {
           toast.success("Berhasil Menambahkan Data Perusahaan")
           navigate('/')
         } else {
-          // console.log("error", error);
           toast.warning('ga')
         }
       })
