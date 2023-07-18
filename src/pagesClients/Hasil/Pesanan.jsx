@@ -19,8 +19,17 @@ export default class Pesanan extends Component {
       menus: [],
       keranjangs: [],
       id_user: "",
+      alamat: "",
+      nama_lengkap: "",
+      no_rek: "",
+      nama_rekening: "",
+      no_tlp: "",
+      total_bayar: "",
+      status_pengiriman: 'menunggu di proses'
     };
   }
+
+  
 
   componentDidMount() {
     // this.fetchDataUser();
@@ -38,6 +47,8 @@ export default class Pesanan extends Component {
     axios.get(`/api/v1/checkout/${Storage.get("user_id").data}`).then((res) => {
       this.getListKeranjang();
     });
+
+    
   }
 
   getListKeranjang = () => {
@@ -66,6 +77,29 @@ export default class Pesanan extends Component {
   //     });
   // }
 
+  handleBayar = (e) => {
+
+    e.preventDefault();
+
+    let form = {
+      id_user : Storage.get('user_id').data,
+      nama_lengkap: this.state.nama_lengkap,
+      alamat: this.state.alamat,
+      no_tlp: this.state.no_tlp,
+      nama_rekening: this.state.nama_rekening,
+      no_rek: this.state.no_rek,
+      status_pengiriman: this.state.status_pengiriman
+
+    }
+    axios.post(`api/v1/checkout/orderPesanan`, { form }).then(res => {
+      console.log("res orderan", res);
+    })
+
+
+
+
+  }
+
   render() {
     const { menus, keranjangs } = this.state;
     return (
@@ -78,28 +112,48 @@ export default class Pesanan extends Component {
                 <hr />
               </h2>
               <Row>
-                <Form>
+                <Form onSubmit={this.handleBayar}>
                   <Form.Group
                     className="mb-3"
                     controlId="exampleForm.ControlInput1"
                   >
                     <Form.Label>Nama Lengkap</Form.Label>
-                    <Form.Control type="text" placeholder="" />
+                    <Form.Control type="text" name="nama_lengkap" onChange={(e) => this.setState({e.target.value})} />
                   </Form.Group>
+
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlTextarea1"
+                  >
+                      <Form.Label>Alamat Lengkap</Form.Label>
+                    <Form.Control as="textarea" name="alamat" onChange={(e) => this.setState({e.target.value })} rows={3} />
+                   
+                  </Form.Group>
+                
                   <Form.Group
                     className="mb-3"
                     controlId="exampleForm.ControlInput1"
                   >
                     <Form.Label>No Telepon ( WA )</Form.Label>
-                    <Form.Control type="text" placeholder="" />
+                    <Form.Control type="text" name="no_tlp" onChange={(e) => this.setState({e.target.value})} />
                   </Form.Group>
+
                   <Form.Group
                     className="mb-3"
-                    controlId="exampleForm.ControlTextarea1"
+                    controlId="exampleForm.ControlInput1"
                   >
-                    <Form.Label>Alamat Lengkap</Form.Label>
-                    <Form.Control as="textarea" rows={3} />
+                    <Form.Label>Nama Rekening</Form.Label>
+                    <Form.Control type="text" name="nama_rekening" onChange={(e) => this.setState({nama_rekening : e.target.value})}  />
                   </Form.Group>
+
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Label>No Rekening</Form.Label>
+                    <Form.Control type="text" name="no_rek" onChange={(e) => this.setState({e.target.value})}  />
+                  </Form.Group>
+                 
                   <Form.Select aria-label="Default select example">
                     <option>Metode Pembayaran</option>
                     <option value="1">BCA Virtual account</option>
@@ -107,7 +161,7 @@ export default class Pesanan extends Component {
                   </Form.Select>
                     <Button
                     variant="primary"
-                    block='true'
+                    type="submit"
                     style={{width: '250px'}}
                     className="btn bg-primary mt-2 mb-2 text-white"
                     size='lg'
