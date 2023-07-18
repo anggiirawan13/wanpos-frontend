@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Badge, Col, Row, Modal, Button } from "react-bootstrap";
 import { ListGroup } from "react-bootstrap";
-import ModalKeranjang from './ModalKeranjang';
+import ModalKeranjang from "./ModalKeranjang";
 
 import TotalBayar from "./totalBayar";
 
@@ -55,29 +55,29 @@ export default class hasil extends Component {
                     <h5 className="dark:text-indigo-200 mb-2">
                       {menuKerajang.name_products}
                     </h5>
-                    <p
+                    <span
                       className="dark:text-indigo-200 mb-2"
                       style={{ fontSize: "12px" }}
                     >
                       Rp. {numberWithComas(menuKerajang.harga)} x{" "}
                       {menuKerajang.jumlah}
-                    </p>
+                    </span>
                   </Col>
                   <Col>
-                    <p
+                    <span
                       className="dark:text-indigo-200 mb-2"
                       style={{ fontSize: "14px" }}
                     >
                       <strong className="float-right">
                         Rp. {numberWithComas(menuKerajang.total_harga)}
                       </strong>
-                    </p>
+                    </span>
                   </Col>
                 </Row>
               </ListGroup.Item>
             ))}
 
-          <ModalKeranjang handleClose={this.handleClose} {...this.state} />
+            <ModalKeranjang handleClose={this.handleClose} {...this.state} />
           </ListGroup>
         )}
         <TotalBayar keranjangs={keranjangs} />

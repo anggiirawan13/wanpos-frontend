@@ -15,7 +15,7 @@ function CreateProduct() {
   let [harga, setHarga] = useState("");
   let [stock, setStockProduct] = useState("");
   let [file, setFile] = useState(null);
-  
+
   const createProduct = async (e) => {
     e.preventDefault();
     try {
@@ -28,8 +28,9 @@ function CreateProduct() {
       formData.append("stock", stock);
       formData.append("file", file);
 
-      await axios.post('api/v1/createProduct', formData)
-      .then((res) => console.log(res.data));
+      await axios
+        .post("api/v1/createProduct", formData)
+        .then((res) => console.log(res.data));
     } catch (error) {
       console.log("error", error.message);
     }
@@ -60,10 +61,14 @@ function CreateProduct() {
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Tambahkan foto produk</Form.Label>
-                      <Form.Control type="file" accept="image/jpg,image/jpeg,image/png" onChange={(e) => setFile(e.target.files[0])}/>
+                      <Form.Control
+                        type="file"
+                        accept="image/jpg,image/jpeg,image/png"
+                        onChange={(e) => setFile(e.target.files[0])}
+                      />
                     </Form.Group>
                   </Form.Group>
-                  
+
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Kode Product</Form.Label>
                     <Form.Control
@@ -74,7 +79,7 @@ function CreateProduct() {
                       placeholder="Enter"
                     />
                   </Form.Group>
-                  
+
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Nama Product</Form.Label>
                     <Form.Control
@@ -96,7 +101,7 @@ function CreateProduct() {
                       placeholder="Enter"
                     />
                   </Form.Group>
-                  
+
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Variant Product</Form.Label>
                     <Form.Control
@@ -129,7 +134,7 @@ function CreateProduct() {
                       placeholder="Enter"
                     />
                   </Form.Group>
-                  
+
                   <Button
                     variant="primary"
                     type="submit"

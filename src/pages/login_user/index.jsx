@@ -10,46 +10,31 @@ import { toast } from "react-toastify";
 import Storage from "../../Storage/storage";
 
 export default function Login() {
-
-
-
- const [email, setEmail] = useState('');
- const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-
-  // axios.defaults.withCredentials = true;
-
-  // const handleInput = (event) => {
-  //   setValues( prev => ({
-  //     ...prev,
-  //     [event.target.name]: [event.target.value],
-  //   }));
-  //   console.log("values", values);
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post(`/api/v1/login`, {email, password}).then(res => {
-      console.log("res login", res);
-      // Storage.set('user_id', {data: res.data.result.user_id});
-      console.log("res user", res);
+    axios
+      .post(`/api/v1/login`, { email, password })
+      .then((res) => {
+        if (res.data.error == false) {
+          Storage.set("user_id", { data: res.data.data.user_id });
+          Storage.set("username", { data: res.data.data.name });
 
-      if (res.data.error == false ) {
-
-        Storage.set('user_id', { data: res.data.data.user_id })
-        Storage.set('username', { data: res.data.data.name })
-
-        toast.success(res.data.message);
-        navigate('/roti-sobek')
-      } else {
-        toast.warning(res.data.message)
-      }
-    }).catch(error => {
-      console.log(error);
-    })
-  }
+          toast.success(res.data.message);
+          navigate("/roti-sobek");
+        } else {
+          toast.warning(res.data.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -63,15 +48,12 @@ export default function Login() {
               <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">
                 Login
               </h2>
-              <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">
-                
-              </div>
+              <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1"></div>
 
               <div className="flex items-start mt-3">
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3">
                     <Row>
-
                       <Col>
                         <Form.Group className="mb-3">
                           <Form.Control
@@ -92,8 +74,6 @@ export default function Login() {
                             placeholder="Password"
                           />
                         </Form.Group>
-
-                        
                       </Col>
                     </Row>
                   </Form.Group>
@@ -103,10 +83,10 @@ export default function Login() {
                     className="bg-primary"
                     type="submit"
                   >
-                  Login
+                    Login
                   </Button>
                   <Link
-                  to={'/signup'}
+                    to={"/signup"}
                     variant="primary"
                     className="bg-success btn btn-success ml-3"
                     type="submit"

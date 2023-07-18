@@ -1,23 +1,10 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar/index";
 import { Col, Container, Row } from "react-bootstrap";
-import Menus from "../pagesClients/Menus/menu";
-import swal from "sweetalert";
-import Card from 'react-bootstrap/Card';
-import Rotibakar from '../images/rotiBakar1.png';
-import Button from 'react-bootstrap/Button';
-
-
-
-import Hasil from "./Hasil/hasil";
-import axios, { Axios } from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import Storage from "../../src/Storage/storage";
+import Card from "react-bootstrap/Card";
+import axios from "axios";
 import { Link } from "react-router-dom";
-
-import {API_URL} from '../../env.json'
-console.log(API_URL)
-
+import { API_URL } from "../../env.json";
 
 export default class DaftarMenu extends Component {
   constructor(props) {
@@ -35,14 +22,12 @@ export default class DaftarMenu extends Component {
       .then((res) => {
         const menus = res.data.result;
         this.setState({ menus });
-        console.log(menus);
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  
   render() {
     const { menus, keranjangs } = this.state;
     return (
@@ -57,36 +42,41 @@ export default class DaftarMenu extends Component {
                 <hr />
               </h2>
               <Row>
-                  { menus && menus.map((menu, index) => (
-                <Col md={4} xs={6}>
-
-                
-                  <Card
-                    className="shadow mb-5"
-                    onClick={() => ma}
-                  >
-                    <Card.Img variant="top" src={`${API_URL}/uploads/${menu.files}`} />
-                    <Card.Body>
-                      <Card.Title>
-                        {menu.name_products} - {menu.kode}{" "}
-                      </Card.Title>
-                      <p className="dark:text-indigo-200 mb-2">
-                        {menu.desc_products}
-                      </p>
-                      <Card.Text>
-                        <>Rp. {menu.harga}</>
-                      </Card.Text>
-                      <Card.Text>
-                        <p className="dark:text-indigo-200 mb-2">
-                          {" "}
-                          Stock Tersedia : {menu.stock}
-                        </p>
-                      </Card.Text>
-                      <Link to='/login' className="btn btn-primary" variant="primary">Beli Sekarang</Link>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                    ))}
+                {menus &&
+                  menus.map((menu, index) => (
+                    <Col md={4} xs={6} key={index}>
+                      <Card className="shadow mb-5">
+                        <Card.Img
+                          variant="top"
+                          src={`${API_URL}/uploads/${menu.files}`}
+                        />
+                        <Card.Body>
+                          <Card.Title>
+                            {menu.name_products} - {menu.kode}{" "}
+                          </Card.Title>
+                          <span className="dark:text-indigo-200 mb-2">
+                            {menu.desc_products}
+                          </span>
+                          <Card.Text>
+                            <>Rp. {menu.harga}</>
+                          </Card.Text>
+                          <Card.Text>
+                            <span className="dark:text-indigo-200 mb-2">
+                              {" "}
+                              Stock Tersedia : {menu.stock}
+                            </span>
+                          </Card.Text>
+                          <Link
+                            to="/login"
+                            className="btn btn-primary"
+                            variant="primary"
+                          >
+                            Beli Sekarang
+                          </Link>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
               </Row>
             </Col>
           </Row>

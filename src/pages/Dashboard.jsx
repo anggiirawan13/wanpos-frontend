@@ -20,7 +20,6 @@ import DashboardCard11 from "../partials/dashboard/DashboardCard11";
 import DashboardCard12 from "../partials/dashboard/DashboardCard12";
 import DashboardCard13 from "../partials/dashboard/DashboardCard13";
 
-
 import Modal from "react-bootstrap/Modal";
 import Banner from "../partials/Banner";
 import Form from "react-bootstrap/Form";
@@ -45,21 +44,18 @@ function Dashboard() {
   const handleShow = () => setShow(true);
 
   const saveData = async (e) => {
-
-
     e.preventDefault();
-      await axios.post('api/v1/createCompany', { name_company, desc_company, alamat}).then(res => {
-        console.log("res", res);
-        if ( res.data.error === false ) {
-          console.log("res", res);
-          toast.success("Berhasil Menambahkan Data Perusahaan")
-          navigate('/')
+    await axios
+      .post("api/v1/createCompany", { name_company, desc_company, alamat })
+      .then((res) => {
+        if (res.data.error === false) {
+          toast.success("Berhasil Menambahkan Data Perusahaan");
+          navigate("/");
         } else {
-          toast.warning('ga')
+          toast.warning("ga");
         }
-      })
-   
-  }
+      });
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -98,9 +94,12 @@ function Dashboard() {
                   <Modal.Body>
                     <Form onSubmit={saveData}>
                       <Form.Group className="mb-3">
-
                         <Form.Label>Nama Perusahaan</Form.Label>
-                        <Input type="text" name="name_company" onChange={(e) => setName(e.target.value)}  />
+                        <Input
+                          type="text"
+                          name="name_company"
+                          onChange={(e) => setName(e.target.value)}
+                        />
                         {/* <Form.Control
                           type="text"
                           value={name}
@@ -115,7 +114,7 @@ function Dashboard() {
                         <Form.Control
                           type="text"
                           name="desc_company"
-                          onChange={ (e) => console.log(setDescName(e.target.value))}
+                          onChange={(e) => setDescName(e.target.value)}
                           placeholder="Enter"
                         />
                       </Form.Group>
@@ -128,7 +127,6 @@ function Dashboard() {
                           onChange={(e) => setAlamat(e.target.value)}
                           placeholder="Enter"
                         />
-                            
                       </Form.Group>
 
                       <Button
@@ -138,9 +136,13 @@ function Dashboard() {
                       >
                         Tambah Data
                       </Button>
-                      <Button variant="secondary" className="bg-danger ml-2" onClick={handleClose}>
-                      Tutup
-                    </Button>
+                      <Button
+                        variant="secondary"
+                        className="bg-danger ml-2"
+                        onClick={handleClose}
+                      >
+                        Tutup
+                      </Button>
                     </Form>
                   </Modal.Body>
 
@@ -155,8 +157,6 @@ function Dashboard() {
                 </Modal>
               </div>
             </div>
-
-            
 
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">

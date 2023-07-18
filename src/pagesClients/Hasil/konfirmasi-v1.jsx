@@ -1,15 +1,8 @@
 import React, { Component } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import Menus from "../Menus/menu";
-import swal from "sweetalert";
 import Form from "react-bootstrap/Form";
-import Order from "../Hasil/order";
-import axios, { Axios } from "axios";
-import { useParams } from "react-router-dom";
+import axios from "axios";
 import Storage from "../../Storage/storage";
-import { Link } from "react-router-dom";
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Pesanan extends Component {
   constructor(props) {
@@ -23,8 +16,6 @@ export default class Pesanan extends Component {
   }
 
   componentDidMount() {
-    // this.fetchDataUser();
-
     axios
       .get(`api/v1/listProduct`)
       .then((res) => {
@@ -44,7 +35,6 @@ export default class Pesanan extends Component {
     axios
       .get(`/api/v1/checkout/user/${Storage.get("user_id").data}`)
       .then((res) => {
-        console.log("res keranjang", res);
         const keranjangs = res.data.result;
         this.setState({ keranjangs });
       })
@@ -52,19 +42,6 @@ export default class Pesanan extends Component {
         console.log("error", error);
       });
   };
-
-  // fetchDataUser() {
-  //   axios
-  //     .post("/api/v1/login")
-  //     .then((res) => {
-  //       if (res.data.error === false) {
-  //         Storage.set("user_id", { data: res.data.result[0].id_user });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log("ini error:", error);
-  //     });
-  // }
 
   render() {
     const { menus, keranjangs } = this.state;
@@ -108,18 +85,18 @@ export default class Pesanan extends Component {
                     <Form.Label>Nama pemilik rekening ( Optional )</Form.Label>
                     <Form.Control as="textarea" rows={3} />
                   </Form.Group>
-                  
+
                   <Form.Select aria-label="Default select example">
                     <option>Metode Pembayaran</option>
                     <option value="1">Transfer</option>
                     <option value="2">Ambil Sendiri</option>
                   </Form.Select>
-                    <Button
+                  <Button
                     variant="primary"
-                    block='true'
-                    style={{width: '250px'}}
+                    block="true"
+                    style={{ width: "250px" }}
                     className="btn bg-primary mt-2 mb-2 text-white"
-                    size='lg'
+                    size="lg"
                   >
                     Konfirmasi
                   </Button>

@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import Menus from "../Menus/menu";
-import swal from "sweetalert";
 import Form from "react-bootstrap/Form";
 import Order from "../Hasil/order";
-import axios, { Axios } from "axios";
-import { useParams } from "react-router-dom";
+import axios from "axios";
 import Storage from "../../Storage/storage";
-import { Link } from "react-router-dom";
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class Pesanan extends Component {
   constructor(props) {
@@ -24,16 +18,14 @@ export default class Pesanan extends Component {
       no_rek: "",
       nama_rekening: "",
       no_tlp: "",
-      total_bayar: "",
-      status_pengiriman: 'menunggu di proses'
+      total_bayar: 0,
+      metode_pemesanan: "",
+      status_pengiriman: "menunggu_diproses",
+      status: "menunggu_konfirmasi",
     };
   }
 
-  
-
   componentDidMount() {
-    // this.fetchDataUser();
-
     axios
       .get(`api/v1/listProduct`)
       .then((res) => {
@@ -47,15 +39,12 @@ export default class Pesanan extends Component {
     axios.get(`/api/v1/checkout/${Storage.get("user_id").data}`).then((res) => {
       this.getListKeranjang();
     });
-
-    
   }
 
   getListKeranjang = () => {
     axios
       .get(`/api/v1/checkout/user/${Storage.get("user_id").data}`)
       .then((res) => {
-        console.log("res keranjang", res);
         const keranjangs = res.data.result;
         this.setState({ keranjangs });
       })
@@ -64,41 +53,26 @@ export default class Pesanan extends Component {
       });
   };
 
-  // fetchDataUser() {
-  //   axios
-  //     .post("/api/v1/login")
-  //     .then((res) => {
-  //       if (res.data.error === false) {
-  //         Storage.set("user_id", { data: res.data.result[0].id_user });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log("ini error:", error);
-  //     });
-  // }
-
   handleBayar = (e) => {
-
     e.preventDefault();
 
     let form = {
-      id_user : Storage.get('user_id').data,
+      id_user: Storage.get("user_id").data,
       nama_lengkap: this.state.nama_lengkap,
       alamat: this.state.alamat,
       no_tlp: this.state.no_tlp,
       nama_rekening: this.state.nama_rekening,
       no_rek: this.state.no_rek,
-      status_pengiriman: this.state.status_pengiriman
+      total_bayar: this.state.total_bayar,
+      metode_pemesanan: this.state.metode_pemesanan,
+      status_pengiriman: this.state.status_pengiriman,
+      status: "menunggu_konfirmasi",
+    };
 
-    }
-    axios.post(`api/v1/checkout/orderPesanan`, { form }).then(res => {
+    axios.post(`api/v1/checkout/orderPesanan`, form).then((res) => {
       console.log("res orderan", res);
-    })
-
-
-
-
-  }
+    });
+  };
 
   render() {
     const { menus, keranjangs } = this.state;
@@ -118,24 +92,42 @@ export default class Pesanan extends Component {
                     controlId="exampleForm.ControlInput1"
                   >
                     <Form.Label>Nama Lengkap</Form.Label>
-                    <Form.Control type="text" name="nama_lengkap" onChange={(e) => this.setState({e.target.value})} />
+                    <Form.Control
+                      type="text"
+                      name="nama_lengkap"
+                      onChange={(e) =>
+                        this.setState({ nama_lengkap: e.target.value })
+                      }
+                    />
                   </Form.Group>
 
                   <Form.Group
                     className="mb-3"
                     controlId="exampleForm.ControlTextarea1"
                   >
-                      <Form.Label>Alamat Lengkap</Form.Label>
-                    <Form.Control as="textarea" name="alamat" onChange={(e) => this.setState({e.target.value })} rows={3} />
-                   
+                    <Form.Label>Alamat Lengkap</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="alamat"
+                      onChange={(e) =>
+                        this.setState({ alamat: e.target.value })
+                      }
+                      rows={3}
+                    />
                   </Form.Group>
-                
+
                   <Form.Group
                     className="mb-3"
                     controlId="exampleForm.ControlInput1"
                   >
                     <Form.Label>No Telepon ( WA )</Form.Label>
-                    <Form.Control type="text" name="no_tlp" onChange={(e) => this.setState({e.target.value})} />
+                    <Form.Control
+                      type="text"
+                      name="no_tlp"
+                      onChange={(e) =>
+                        this.setState({ no_tlp: e.target.value })
+                      }
+                    />
                   </Form.Group>
 
                   <Form.Group
@@ -143,7 +135,13 @@ export default class Pesanan extends Component {
                     controlId="exampleForm.ControlInput1"
                   >
                     <Form.Label>Nama Rekening</Form.Label>
-                    <Form.Control type="text" name="nama_rekening" onChange={(e) => this.setState({nama_rekening : e.target.value})}  />
+                    <Form.Control
+                      type="text"
+                      name="nama_rekening"
+                      onChange={(e) =>
+                        this.setState({ nama_rekening: e.target.value })
+                      }
+                    />
                   </Form.Group>
 
                   <Form.Group
@@ -151,20 +149,26 @@ export default class Pesanan extends Component {
                     controlId="exampleForm.ControlInput1"
                   >
                     <Form.Label>No Rekening</Form.Label>
-                    <Form.Control type="text" name="no_rek" onChange={(e) => this.setState({e.target.value})}  />
+                    <Form.Control
+                      type="text"
+                      name="no_rek"
+                      onChange={(e) =>
+                        this.setState({ no_rek: e.target.value })
+                      }
+                    />
                   </Form.Group>
-                 
+
                   <Form.Select aria-label="Default select example">
                     <option>Metode Pembayaran</option>
                     <option value="1">BCA Virtual account</option>
                     <option value="2">Di ambil Sendiri</option>
                   </Form.Select>
-                    <Button
+                  <Button
                     variant="primary"
                     type="submit"
-                    style={{width: '250px'}}
+                    style={{ width: "250px" }}
                     className="btn bg-primary mt-2 mb-2 text-white"
-                    size='lg'
+                    size="lg"
                   >
                     Bayar Sekarang
                   </Button>

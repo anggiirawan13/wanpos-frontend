@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 
-
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import WelcomeBanner from "../../partials/dashboard/WelcomeBanner";
@@ -36,28 +35,16 @@ function Dashboard() {
     getCompany();
   }, []);
 
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [company, setCompany] = useState([]);
-  const [ name_company, setName ] = useState('');
-  const [ desc_name, setDesc ] = useState('');
-  const [ team, setTeam ] = useState('');
-  const [show, setShow] = useState(false);
-  const { id_company } = useParams();
-
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const getCompany = async () => {
     const response = await axios.get(`api/v1/listCompany`);
-    console.log("response", response);
     setCompany(response.data.result);
     setName(response.data.result[0].name_company);
     setDesc(response.data.result[0].desc_company);
     setTeam(response.data.result[0].team);
   };
-
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -99,7 +86,6 @@ function Dashboard() {
                       <th className="p-2">
                         <div className="font-semibold text-center">Action</div>
                       </th>
-                      
                     </tr>
                   </thead>
                   {/* Table body */}
@@ -124,24 +110,24 @@ function Dashboard() {
                           <Link to={`/company/${item.id_company}`} className="btn bg-primary"> Ubah </Link>
                         </td> */}
                         <td className="p-2">
-                          <Link to={`/company/${item.id_company}`} className="btn bg-danger"> Delete </Link>
+                          <Link
+                            to={`/company/${item.id_company}`}
+                            className="btn bg-danger"
+                          >
+                            {" "}
+                            Delete{" "}
+                          </Link>
                         </td>
-                        
                       </tr>
                     ))}
                   </tbody>
                 </table>
-               
               </div>
             </div>
-             
-               
 
             {/* Cards */}
           </div>
         </main>
-
-       
 
         <Banner />
       </div>

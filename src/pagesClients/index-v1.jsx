@@ -5,27 +5,20 @@ import Menus from "../pagesClients/Menus/menu";
 import swal from "sweetalert";
 
 import Hasil from "./Hasil/hasil";
-import axios, { Axios } from "axios";
-import { useParams } from "react-router-dom";
+import axios from "axios";
 import Storage from "../../src/Storage/storage";
-import { Link } from "react-router-dom";
-
 
 export default class DaftarMenu extends Component {
-
   constructor(props) {
-
     super(props);
     this.state = {
       menus: [],
       keranjangs: [],
       id_user: "",
     };
-
   }
 
   componentDidMount() {
-    
     axios
       .get(`api/v1/listProduct`)
       .then((res) => {
@@ -39,15 +32,12 @@ export default class DaftarMenu extends Component {
     axios.get(`/api/v1/checkout/${Storage.get("user_id").data}`).then((res) => {
       this.getListKeranjang();
     });
-
-
   }
 
   getListKeranjang = () => {
     axios
       .get(`/api/v1/checkout/user/${Storage.get("user_id").data}`)
       .then((res) => {
-        console.log("res keranjang", res);
         const keranjangs = res.data.result;
         this.setState({ keranjangs });
       })
@@ -56,63 +46,65 @@ export default class DaftarMenu extends Component {
       });
   };
 
- 
-
   masukKeranjang = (value) => {
+    axios
+      .get(
+        `/api/v1/checkout/${value.id_products}/${Storage.get("user_id").data}`
+      )
+      .then((res) => {
+        if (
+          res.data.result.length > 0 &&
+          Storage.get("user_id").data == res.data.result[0].user_id
+        ) {
+          const jumlah = res.data.result[0].jumlah + 1;
+          const total_harga = res.data.result[0].total_harga + value.harga;
+          let id_products = value.id_products;
+          let user_id = Storage.get("user_id").data;
 
-    axios.get(`/api/v1/checkout/${value.id_products}/${Storage.get('user_id').data}`).then((res) => {
-      console.log("resssss", res);
-
-      if ( res.data.result.length > 0 && Storage.get('user_id').data == res.data.result[0].user_id ) {
-        const jumlah = res.data.result[0].jumlah + 1;
-        const total_harga = res.data.result[0].total_harga + value.harga;
-        let id_products = value.id_products;
-        let user_id = Storage.get("user_id").data;
-
-        axios
-          .put(`/api/v1/checkout/${res.data.result[0].id_checkout}`, {
-            jumlah,
-            total_harga,
-            id_products,
-            user_id
+          axios
+            .put(`/api/v1/checkout/${res.data.result[0].id_checkout}`, {
+              jumlah,
+              total_harga,
+              id_products,
+              user_id,
             })
-          .then((res) => {
-            this.getListKeranjang();
-            swal({
-              title: "Berhasil Menambahkan ke Keranjang!",
-              text: "Berhasil Masuk Keranjang " + value.name_products,
-              icon: "success",
-              timer: 1500
+            .then((res) => {
+              this.getListKeranjang();
+              swal({
+                title: "Berhasil Menambahkan ke Keranjang!",
+                text: "Berhasil Masuk Keranjang " + value.name_products,
+                icon: "success",
+                timer: 1500,
+              });
             });
-          });
-      } else {
-        const jumlah = 1;
-        const total_harga = value.harga;
-        const id_products = value.id_products;
-        const user_id = Storage.get("user_id").data;
+        } else {
+          const jumlah = 1;
+          const total_harga = value.harga;
+          const id_products = value.id_products;
+          const user_id = Storage.get("user_id").data;
 
-        axios
-          .post("api/v1/checkout", {
-            jumlah,
-            total_harga,
-            id_products,
-            user_id
-          })
-          .then((res) => {
-            console.log("ressssd", res);
-            this.getListKeranjang();
-            swal({
-              title: "Berhasil Menambahkan ke Keranjang!",
-              text: "Berhasil Masuk Keranjang " + value.name_products,
-              icon: "success",
-              timer: 1500
+          axios
+            .post("api/v1/checkout", {
+              jumlah,
+              total_harga,
+              id_products,
+              user_id,
+            })
+            .then((res) => {
+              console.log("ressssd", res);
+              this.getListKeranjang();
+              swal({
+                title: "Berhasil Menambahkan ke Keranjang!",
+                text: "Berhasil Masuk Keranjang " + value.name_products,
+                icon: "success",
+                timer: 1500,
+              });
+            })
+            .catch((error) => {
+              console.log("ini errornya s : ", error);
             });
-          })
-          .catch((error) => {
-            console.log("ini errornya s : ", error);
-          });
-      }
-    });
+        }
+      });
   };
   render() {
     const { menus, keranjangs } = this.state;

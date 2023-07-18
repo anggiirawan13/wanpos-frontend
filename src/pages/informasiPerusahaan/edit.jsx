@@ -28,57 +28,43 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-
-
-
-
- 
-
-
-
 function EditPerusahaan() {
-  
- 
   const { id_company } = useParams();
   const navigate = useNavigate();
 
-
   useEffect(() => {
-    getCompanyById()
+    getCompanyById();
   }, []);
-  
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [name_company, setName] = useState("");
   const [desc_company, setDescName] = useState("");
   const [team, setTeam] = useState("");
 
-
   const getCompanyById = async () => {
     try {
-     const response = await axios.get(`/api/v1/company/${id_company}`);
-     setName(response.data.result[0].name_company)
-     setDescName(response.data.result[0].desc_company)
-     setTeam(response.data.result[0].team)
-      
+      const response = await axios.get(`/api/v1/company/${id_company}`);
+      setName(response.data.result[0].name_company);
+      setDescName(response.data.result[0].desc_company);
+      setTeam(response.data.result[0].team);
     } catch (error) {
       console.log("error", error);
     }
-  }
+  };
 
   const updateCompany = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.patch(`/api/v1/updateCompany/${id_company}`, {name_company, desc_company, team});
+      const response = await axios.patch(
+        `/api/v1/updateCompany/${id_company}`,
+        { name_company, desc_company, team }
+      );
       toast.success(response.data.message);
-      navigate('/')
+      navigate("/");
     } catch (error) {
       console.log("error", error);
     }
-  }
-
-
-  
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -100,51 +86,48 @@ function EditPerusahaan() {
             <div className="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
               <div className="p-3">
                 {/* Table */}
-                
+
                 <Form onSubmit={updateCompany}>
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Nama Perusahaan</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={name_company}
+                      name="name_company"
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
 
-                        <Form.Label>Nama Perusahaan</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={name_company}
-                          name="name_company"
-                          onChange={ (e) => setName(e.target.value)}
-                          placeholder="Enter"
-                        />
-                      </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Deskripsi Perusahaan</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={desc_company}
+                      name="desc_company"
+                      onChange={(e) => setDescName(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
 
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Deskripsi Perusahaan</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={desc_company}
-                          name="desc_company"
-                          onChange={ (e) => setDescName(e.target.value)}
-                          placeholder="Enter"
-                        />
-                      </Form.Group>
-
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Team</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={team}
-                          name="team"
-                          onChange={ (e) => setTeam(e.target.value)}
-                          placeholder="Enter"
-                        />
-                      </Form.Group>
-                      <Button
-                  variant="primary"
-                  type="submit"
-                  className="bg-primary"
-                >
-                  Ubah
-                </Button>
-
-                     
-                    </Form>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Team</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={team}
+                      name="team"
+                      onChange={(e) => setTeam(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="bg-primary"
+                  >
+                    Ubah
+                  </Button>
+                </Form>
               </div>
             </div>
 

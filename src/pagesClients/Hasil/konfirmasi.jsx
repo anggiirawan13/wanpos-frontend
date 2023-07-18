@@ -35,10 +35,10 @@ export default class hasil extends Component {
           <h2 className="text-center mt-2" style={{ fontSize: "40px" }}>
             8003428392
           </h2>
-          <p className="text-center">
+          <span className="text-center">
             Mohon Lakukan Pembayaran ke no rekening tersebut. Konfirmasi jika
             sudah melakukan pembayaran
-          </p>
+          </span>
           <Link
             to="/konfirmasi-pesanan"
             className="text-center d-flex justify-center mt-5 mx-0 btn btn-primary"

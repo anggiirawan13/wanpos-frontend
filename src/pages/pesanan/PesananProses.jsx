@@ -4,22 +4,27 @@ import Header from "../../partials/Header";
 import Banner from "../../partials/Banner";
 import axios from "axios";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
-function Product() {
+function PesananProses() {
   useEffect(() => {
-    getCompany();
+    getOrder();
   }, []);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [company, setCompany] = useState([]);
+  const [order, setOrder] = useState([]);
 
-  const getCompany = async () => {
-    const response = await axios.get(`api/v1/listCompany`);
-    setCompany(response.data.result);
-    setName(response.data.result[0].name_company);
-    setDesc(response.data.result[0].desc_company);
-    setTeam(response.data.result[0].team);
+  const getOrder = () => {
+    axios.get("/api/v1/order/proses").then((response) => {
+      console.log("response", response.data.result);
+      setOrder(response.data.result);
+    });
+  };
+
+  const doSelesaiOrder = (idOrder) => {
+    axios.put(`/api/v1/order/${idOrder}/selesai`).then((response) => {
+      console.log(response);
+    });
   };
 
   return (
@@ -35,7 +40,7 @@ function Product() {
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <h2 className="font-semibold text-slate-900 mb-3 dark:text-slate-100">
-              Informasi Perusahaan
+              Pesanan Proses
             </h2>
 
             {/* Dashboard actions */}
@@ -46,18 +51,16 @@ function Product() {
                   <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                     <tr>
                       <th className="p-2">
-                        <div className="font-semibold text-left">
-                          Nama Product
+                        <div className="font-semibold text-left">ID Order</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">
+                          Nama Lengkap
                         </div>
                       </th>
                       <th className="p-2">
                         <div className="font-semibold text-center">
-                          Harga Product
-                        </div>
-                      </th>
-                      <th className="p-2">
-                        <div className="font-semibold text-center">
-                          Deskripsi Product
+                          Total Bayar
                         </div>
                       </th>
 
@@ -71,27 +74,28 @@ function Product() {
                   <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                     {/* Row */}
 
-                    {company.map((item, index) => (
-                      <tr key={item.id_company}>
+                    {order.map((item, index) => (
+                      <tr key={index}>
                         <td className="p-2">
-                          <div className="text-center">{item.name_company}</div>
+                          <div className="text-center">{item.id_order}</div>
                         </td>
                         <td className="p-2">
                           <div className="text-center text-emerald-500">
-                            {item.desc_company}
+                            {item.nama_lengkap}
                           </div>
                         </td>
                         <td className="p-2">
-                          <div className="text-center">{item.team}</div>
+                          <div className="text-center">{item.total_bayar}</div>
                         </td>
                         <td className="p-2">
-                          <Link
-                            to={`/company/${item.id_company}`}
-                            className="btn bg-primary"
+                          <Button
+                            className="text-center"
+                            type="input"
+                            variant="primary"
+                            onClick={() => doSelesaiOrder(item.id_order)}
                           >
-                            {" "}
-                            Ubah{" "}
-                          </Link>
+                            Selesai
+                          </Button>
                         </td>
                       </tr>
                     ))}
@@ -110,4 +114,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default PesananProses;
