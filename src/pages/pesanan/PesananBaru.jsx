@@ -5,8 +5,9 @@ import Banner from "../../partials/Banner";
 import axios from "axios";
 import { useEffect } from "react";
 import { Button } from "react-bootstrap";
+import swal from "sweetalert";
 
-function PesananBaru() {
+export default function PesananBaru() {
   useEffect(() => {
     getOrder();
   }, []);
@@ -21,9 +22,21 @@ function PesananBaru() {
   };
 
   const doProsesOrder = (idOrder) => {
-    axios.put(`/api/v1/order/${idOrder}/proses`).then((response) => {
-      console.log(response);
-    });
+    axios
+      .put(`/api/v1/order/${idOrder}/proses`)
+      .then(() => {
+        swal({
+          title: "Order Di Proses!",
+          text: "order akan segera di proses",
+          icon: "success",
+          timer: 1500,
+        }).then(() => {
+          getOrder();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -112,5 +125,3 @@ function PesananBaru() {
     </div>
   );
 }
-
-export default PesananBaru;

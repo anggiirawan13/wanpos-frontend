@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Badge, Col, Row, Modal, Button } from "react-bootstrap";
+import { Badge, Col, Row } from "react-bootstrap";
 import { ListGroup } from "react-bootstrap";
 import ModalKeranjang from "./ModalKeranjang";
-
 import TotalBayar from "./totalBayar";
 
 function numberWithComas(x) {

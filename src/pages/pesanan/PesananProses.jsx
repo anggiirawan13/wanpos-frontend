@@ -5,8 +5,9 @@ import Banner from "../../partials/Banner";
 import axios from "axios";
 import { useEffect } from "react";
 import { Button } from "react-bootstrap";
+import swal from "sweetalert";
 
-function PesananProses() {
+export default function PesananProses() {
   useEffect(() => {
     getOrder();
   }, []);
@@ -16,15 +17,27 @@ function PesananProses() {
 
   const getOrder = () => {
     axios.get("/api/v1/order/proses").then((response) => {
-      console.log("response", response.data.result);
       setOrder(response.data.result);
     });
   };
 
   const doSelesaiOrder = (idOrder) => {
-    axios.put(`/api/v1/order/${idOrder}/selesai`).then((response) => {
-      console.log(response);
-    });
+    axios
+      .put(`/api/v1/order/${idOrder}/selesai`)
+      .then(() => {
+        getOrder();
+        swal({
+          title: "Order Selesai!",
+          text: "order telah selesai",
+          icon: "success",
+          timer: 1500,
+        }).then(() => {
+          getOrder();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -113,5 +126,3 @@ function PesananProses() {
     </div>
   );
 }
-
-export default PesananProses;

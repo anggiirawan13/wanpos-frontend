@@ -68,7 +68,7 @@ export default class DaftarMenu extends Component {
               id_products,
               user_id,
             })
-            .then((res) => {
+            .then(() => {
               this.getListKeranjang();
               swal({
                 title: "Berhasil Menambahkan ke Keranjang!",
@@ -91,7 +91,6 @@ export default class DaftarMenu extends Component {
               user_id,
             })
             .then((res) => {
-              console.log("ressssd", res);
               this.getListKeranjang();
               swal({
                 title: "Berhasil Menambahkan ke Keranjang!",

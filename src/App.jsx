@@ -14,7 +14,6 @@ import EditPerusahaan from "./pages/informasiPerusahaan/edit";
 import Product from "./pages/product/index";
 import EditProduct from "./pages/product/edit";
 import CreateProduct from "./pages/product/create";
-import KonfirmasiPesanan from "../src/pagesClients/Hasil/konfirmasi-v1";
 
 // Client
 import DaftarMenu from "../src/pagesClients/index-v1";
@@ -48,7 +47,11 @@ function App() {
         <Route exact path="/listCompany" element={<InformasiPerusahaan />} />
         <Route exact path="/company/:id_company" element={<EditPerusahaan />} />
         <Route exact path="/product-page" element={<Product />} />
-        <Route exact path="/edit-product" element={<EditProduct />} />
+        <Route
+          exact
+          path="/edit-product/:id_product"
+          element={<EditProduct />}
+        />
         <Route exact path="/create-product" element={<CreateProduct />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/signup-admin" element={<SignupAdmin />} />

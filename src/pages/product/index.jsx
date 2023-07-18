@@ -15,11 +15,9 @@ function Product() {
   const [company, setCompany] = useState([]);
 
   const getCompany = async () => {
-    const response = await axios.get(`api/v1/listCompany`);
+    const response = await axios.get(`api/v1/listProduct`);
+    console.log(response);
     setCompany(response.data.result);
-    setName(response.data.result[0].name_company);
-    setDesc(response.data.result[0].desc_company);
-    setTeam(response.data.result[0].team);
   };
 
   return (
@@ -35,9 +33,11 @@ function Product() {
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <h2 className="font-semibold text-slate-900 mb-3 dark:text-slate-100">
-              Informasi Perusahaan
+              Informasi Produk
             </h2>
-
+            <Link to={"/tambah-produk"} className="btn bg-primary text-white">
+              Tambah Produk
+            </Link>
             {/* Dashboard actions */}
             <div className="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
               <div className="p-3">
@@ -72,13 +72,15 @@ function Product() {
                     {/* Row */}
 
                     {company.map((item, index) => (
-                      <tr key={item.id_company}>
+                      <tr key={index}>
                         <td className="p-2">
-                          <div className="text-center">{item.name_company}</div>
+                          <div className="text-center">
+                            {item.name_products}
+                          </div>
                         </td>
                         <td className="p-2">
                           <div className="text-center text-emerald-500">
-                            {item.desc_company}
+                            {item.desc_products}
                           </div>
                         </td>
                         <td className="p-2">
@@ -86,7 +88,7 @@ function Product() {
                         </td>
                         <td className="p-2">
                           <Link
-                            to={`/company/${item.id_company}`}
+                            to={`/edit-product/${item.id_products}`}
                             className="btn bg-primary"
                           >
                             {" "}

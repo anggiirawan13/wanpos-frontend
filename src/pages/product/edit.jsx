@@ -5,25 +5,37 @@ import Header from "../../partials/Header";
 import Banner from "../../partials/Banner";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 function EditProduct() {
-  const { id_company } = useParams();
+  const { id_product } = useParams();
 
   useEffect(() => {
     getCompanyById();
   }, []);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [name_company, setName] = useState("");
-  const [desc_company, setDescName] = useState("");
-  const [team, setTeam] = useState("");
+  let [kode, setKodeProduct] = useState("");
+  let [name_products, setNameProduct] = useState("");
+  let [desc_products, setDescProduct] = useState("");
+  let [variant, setVariantProduct] = useState("");
+  let [harga, setHarga] = useState("");
+  let [stock, setStockProduct] = useState("");
+  let [file, setFile] = useState(null);
 
-  const getCompanyById = async () => {
+  const getCompanyById = () => {
     try {
-      const response = await axios.get(`api/v1/company/${id_company}`);
-      console.log("Response", response);
+      axios.get(`/api/v1/product/${id_product}`).then((response) => {
+        console.log(response);
+        setKodeProduct(response.data.kode);
+        setNameProduct(response.data.name_products);
+        setDescProduct(response.data.desc_products);
+        setVariantProduct(response.data.variant);
+        setHarga(response.data.harga);
+        setStockProduct(response.data.stock);
+        setFile(response.data.file);
+      });
     } catch (error) {
       console.log("error", error);
     }
@@ -33,12 +45,18 @@ function EditProduct() {
     e.preventDefault();
     const navigate = useNavigate();
     try {
-      const a = await axios.put(`api/v1/updateCompany/${id_company}`, {
-        name_company,
-        desc_company,
-        team,
+      let formData = new FormData();
+      formData.append("kode", kode);
+      formData.append("name_products", name_products);
+      formData.append("desc_products", desc_products);
+      formData.append("variant", variant);
+      formData.append("harga", harga);
+      formData.append("stock", stock);
+      formData.append("file", file);
+
+      axios.put(`api/v1/updateProduct/${id_product}`, formData).then(() => {
+        navigate("/");
       });
-      navigate("/");
     } catch (error) {
       console.log("error", error);
     }
@@ -67,23 +85,34 @@ function EditProduct() {
 
                 <Form onSubmit={updateCompany}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Nama Product</Form.Label>
+                    <Form.Group controlId="formFile" className="mb-3">
+                      <Form.Label>Ubah foto produk</Form.Label>
+                      <Form.Control
+                        type="file"
+                        accept="image/jpg,image/jpeg,image/png"
+                        onChange={(e) => setFile(e.target.files[0])}
+                      />
+                    </Form.Group>
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Kode Product</Form.Label>
                     <Form.Control
                       type="text"
-                      value={name_company}
-                      name="name_company"
-                      onChange={(e) => setName(e.target.value)}
+                      value={kode}
+                      name="kode"
+                      onChange={(e) => setKodeProduct(e.target.value)}
                       placeholder="Enter"
                     />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Harga Product</Form.Label>
+                    <Form.Label>Nama Product</Form.Label>
                     <Form.Control
                       type="text"
-                      value={desc_company}
-                      name="desc_company"
-                      onChange={(e) => setDescName(e.target.value)}
+                      value={name_products}
+                      name="name_products"
+                      onChange={(e) => setNameProduct(e.target.value)}
                       placeholder="Enter"
                     />
                   </Form.Group>
@@ -92,12 +121,52 @@ function EditProduct() {
                     <Form.Label>Deskripsi Product</Form.Label>
                     <Form.Control
                       type="text"
-                      value={team}
-                      name="team"
-                      onChange={(e) => setTeam(e.target.value)}
+                      value={desc_products}
+                      name="desc_products"
+                      onChange={(e) => setDescProduct(e.target.value)}
                       placeholder="Enter"
                     />
                   </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Variant Product</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={variant}
+                      name="variant"
+                      onChange={(e) => setVariantProduct(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Harga Product</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={harga}
+                      name="harga"
+                      onChange={(e) => setHarga(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Stock Product</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={stock}
+                      name="stock"
+                      onChange={(e) => setStockProduct(e.target.value)}
+                      placeholder="Enter"
+                    />
+                  </Form.Group>
+
+                  <Link
+                    to={`/product-page`}
+                    className="btn bg-secondary text-white mr-2"
+                  >
+                    Kembali
+                  </Link>
                   <Button
                     variant="primary"
                     type="submit"

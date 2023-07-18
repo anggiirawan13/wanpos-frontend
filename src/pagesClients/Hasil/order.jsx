@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { Badge, Col, Row, Modal, Button } from "react-bootstrap";
+import { Badge, Col, Row } from "react-bootstrap";
 import { ListGroup } from "react-bootstrap";
 import ModalKeranjang from "./ModalKeranjang";
-
-import TotalBayar from "./totalBayar";
 
 function numberWithComas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -80,7 +78,6 @@ export default class hasil extends Component {
             <ModalKeranjang handleClose={this.handleClose} {...this.state} />
           </ListGroup>
         )}
-        {/* <TotalBayar keranjangs={keranjangs} /> */}
       </Col>
     );
   }

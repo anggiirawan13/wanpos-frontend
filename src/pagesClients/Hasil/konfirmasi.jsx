@@ -1,15 +1,6 @@
 import React, { Component } from "react";
-import { Badge, Col, Row, Modal, Button, Container } from "react-bootstrap";
-import { ListGroup } from "react-bootstrap";
-import ModalKeranjang from "./ModalKeranjang";
-import { Form } from "react-bootstrap";
-
-import TotalBayar from "./totalBayar";
+import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
-function numberWithComas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
 
 export default class hasil extends Component {
   constructor(props) {
@@ -23,7 +14,6 @@ export default class hasil extends Component {
   }
 
   render() {
-    const { keranjangs } = this.props;
     return (
       <>
         <h2 className="font-semibold text-center mt-3 text-slate-900 mb-3 dark:text-slate-100">

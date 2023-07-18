@@ -8,7 +8,7 @@ function numberWithComas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const menu = ({ menus, masukKeranjang, onClick }) => {
+const menu = ({ menus, masukKeranjang }) => {
   return (
     <Col md={4} xs={6}>
       <Card className="shadow mb-5" onClick={() => masukKeranjang(menus)}>

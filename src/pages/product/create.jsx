@@ -5,6 +5,8 @@ import Header from "../../partials/Header";
 import Banner from "../../partials/Banner";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import swal from "sweetalert";
+import { Link, redirect } from "react-router-dom";
 
 function CreateProduct() {
   let [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,9 +30,14 @@ function CreateProduct() {
       formData.append("stock", stock);
       formData.append("file", file);
 
-      await axios
-        .post("api/v1/createProduct", formData)
-        .then((res) => console.log(res.data));
+      await axios.post("api/v1/createProduct", formData).then((res) => {
+        swal({
+          title: "Berhasil!",
+          text: "berhasil menambahkan product baru",
+          icon: "success",
+          timer: 1500,
+        });
+      });
     } catch (error) {
       console.log("error", error.message);
     }
@@ -134,6 +141,13 @@ function CreateProduct() {
                       placeholder="Enter"
                     />
                   </Form.Group>
+
+                  <Link
+                    to={`/product-page`}
+                    className="btn bg-secondary text-white mr-2"
+                  >
+                    Kembali
+                  </Link>
 
                   <Button
                     variant="primary"

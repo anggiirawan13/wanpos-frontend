@@ -75,7 +75,7 @@ export default class Pesanan extends Component {
   };
 
   render() {
-    const { menus, keranjangs } = this.state;
+    const { keranjangs } = this.state;
     return (
       <>
         <Container>

@@ -5,7 +5,7 @@ import Banner from "../../partials/Banner";
 import axios from "axios";
 import { useEffect } from "react";
 
-function PesananSelesai() {
+export default function PesananSelesai() {
   useEffect(() => {
     getOrder();
   }, []);
@@ -91,5 +91,3 @@ function PesananSelesai() {
     </div>
   );
 }
-
-export default PesananSelesai;
