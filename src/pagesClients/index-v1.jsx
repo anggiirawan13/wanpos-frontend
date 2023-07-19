@@ -52,10 +52,8 @@ export default class DaftarMenu extends Component {
         `/api/v1/checkout/${value.id_products}/${Storage.get("user_id").data}`
       )
       .then((res) => {
-        if (
-          res.data.result.length > 0 &&
-          Storage.get("user_id").data == res.data.result[0].user_id
-        ) {
+        console.log(res.data);
+        if (res.data.result.length > 0) {
           const jumlah = res.data.result[0].jumlah + 1;
           const total_harga = res.data.result[0].total_harga + value.harga;
           let id_products = value.id_products;

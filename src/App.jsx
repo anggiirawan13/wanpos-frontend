@@ -28,7 +28,7 @@ import AddProduk from "../src/pages/product/create";
 import Konfirmasi from "../src/pagesClients/Hasil/konfirmasi";
 import PesananBaru from "./pages/pesanan/pesananBaru";
 import PesananProses from "./pages/pesanan/pesananProses";
-import PesananSelesai from "./pages/pesanan/pesananSelesai";
+import PesananSelesai from "./pages/pesanan/PesananSelesai";
 
 function App() {
   const location = useLocation();

@@ -5,7 +5,7 @@ import Header from "../../partials/Header";
 import Banner from "../../partials/Banner";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -18,30 +18,40 @@ function EditPerusahaan() {
   }, []);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [name_company, setName] = useState("");
-  const [desc_company, setDescName] = useState("");
-  const [team, setTeam] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [companyDesc, setCompanyDesc] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
 
   const getCompanyById = async () => {
     try {
       const response = await axios.get(`/api/v1/company/${id_company}`);
-      setName(response.data.result[0].name_company);
-      setDescName(response.data.result[0].desc_company);
-      setTeam(response.data.result[0].team);
+      setCompanyName(response.data.result[0].name_company);
+      setCompanyDesc(response.data.result[0].desc_company);
+      setCompanyAddress(response.data.result[0].alamat);
     } catch (error) {
       console.log("error", error);
     }
   };
 
-  const updateCompany = async (e) => {
+  const updateCompany = (e) => {
     e.preventDefault();
     try {
-      const response = await axios.patch(
-        `/api/v1/updateCompany/${id_company}`,
-        { name_company, desc_company, team }
-      );
-      toast.success(response.data.message);
-      navigate("/");
+      axios
+        .put(`/api/v1/updateCompany/${id_company}`, {
+          companyName,
+          companyDesc,
+          companyAddress,
+        })
+        .then(() => {
+          swal({
+            title: "Update Berhasil!",
+            text: "perusahaan berhasil di update",
+            icon: "success",
+            timer: 1500,
+          }).then(() => {
+            navigate("/listCompany");
+          });
+        });
     } catch (error) {
       console.log("error", error);
     }
@@ -73,9 +83,9 @@ function EditPerusahaan() {
                     <Form.Label>Nama Perusahaan</Form.Label>
                     <Form.Control
                       type="text"
-                      value={name_company}
+                      value={companyName}
                       name="name_company"
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => setCompanyName(e.target.value)}
                       placeholder="Enter"
                     />
                   </Form.Group>
@@ -84,9 +94,9 @@ function EditPerusahaan() {
                     <Form.Label>Deskripsi Perusahaan</Form.Label>
                     <Form.Control
                       type="text"
-                      value={desc_company}
+                      value={companyDesc}
                       name="desc_company"
-                      onChange={(e) => setDescName(e.target.value)}
+                      onChange={(e) => setCompanyDesc(e.target.value)}
                       placeholder="Enter"
                     />
                   </Form.Group>
@@ -95,12 +105,18 @@ function EditPerusahaan() {
                     <Form.Label>Team</Form.Label>
                     <Form.Control
                       type="text"
-                      value={team}
-                      name="team"
-                      onChange={(e) => setTeam(e.target.value)}
+                      value={companyAddress}
+                      name="alamat"
+                      onChange={(e) => setCompanyAddress(e.target.value)}
                       placeholder="Enter"
                     />
                   </Form.Group>
+                  <Link
+                    to={`/listCompany`}
+                    className="btn bg-secondary text-white mr-2"
+                  >
+                    Kembali
+                  </Link>
                   <Button
                     variant="primary"
                     type="submit"

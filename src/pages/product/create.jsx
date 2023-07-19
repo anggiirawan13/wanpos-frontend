@@ -6,9 +6,10 @@ import Banner from "../../partials/Banner";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import swal from "sweetalert";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function CreateProduct() {
+  const navigate = useNavigate();
   let [sidebarOpen, setSidebarOpen] = useState(false);
   let [kode, setKodeProduct] = useState("");
   let [name_products, setNameProduct] = useState("");
@@ -36,6 +37,8 @@ function CreateProduct() {
           text: "berhasil menambahkan product baru",
           icon: "success",
           timer: 1500,
+        }).then(() => {
+          navigate("/product-page");
         });
       });
     } catch (error) {

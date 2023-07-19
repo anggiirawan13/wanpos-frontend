@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
-
   const [values, setValues] = useState({
     username: "",
     noTlp: "",
@@ -22,7 +21,7 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const handleInput = (event) => {
-    setValues( prev => ({
+    setValues((prev) => ({
       ...prev,
       [event.target.name]: [event.target.value],
     }));
@@ -31,12 +30,11 @@ export default function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post(`api/v1/createUser`, values).then(res => {
-
-        toast.success(res.data.message);
-        navigate('/login')
-    })
-  }
+    axios.post(`api/v1/createUser`, values).then((res) => {
+      toast.success(res.data.message);
+      navigate("/login");
+    });
+  };
 
   return (
     <>
@@ -59,7 +57,7 @@ export default function Signup() {
                   <Form.Group className="mb-3">
                     <Row>
                       <Col>
-                        <Form.Group className="mb-3" >
+                        <Form.Group className="mb-3">
                           <Form.Control
                             type="text"
                             name="username"
@@ -107,8 +105,6 @@ export default function Signup() {
                             placeholder="Password"
                           />
                         </Form.Group>
-
-                        
                       </Col>
                     </Row>
                   </Form.Group>
@@ -122,7 +118,7 @@ export default function Signup() {
                   </Button>
 
                   <Link
-                  to={'/login'}
+                    to={"/login"}
                     variant="primary"
                     className="bg-success btn btn-success ml-3"
                     type="submit"
