@@ -3,6 +3,7 @@ import { Badge, Col, Row } from "react-bootstrap";
 import { ListGroup } from "react-bootstrap";
 import ModalKeranjang from "./ModalKeranjang";
 import TotalBayar from "./totalBayar";
+import axios from "axios";
 
 function numberWithComas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -22,55 +23,82 @@ export default class hasil extends Component {
   }
 
   handleShow = (menuKerajang) => {
-    this.setState({ showmodal: true, keranjangdetail: menuKerajang, jumlah: menuKerajang.jumlah, totalHarga: menuKerajang.total_harga });
+    this.setState({
+      showmodal: true,
+      keranjangdetail: menuKerajang,
+      jumlah: menuKerajang.jumlah,
+      totalHarga: menuKerajang.total_harga,
+    });
   };
 
   tambah = () => {
     this.setState({
-      jumlah: this.state.jumlah+1,
-      totalHarga: this.state.keranjangdetail.harga*(this.state.jumlah+1)
-    })
-  }
+      jumlah: this.state.jumlah + 1,
+      totalHarga: this.state.keranjangdetail.harga * (this.state.jumlah + 1),
+    });
+  };
 
   kurang = () => {
-    if ( this.state.jumlah !== 1 ) {
+    if (this.state.jumlah !== 1) {
       this.setState({
-        jumlah: this.state.jumlah-1,
-        totalHarga: this.state.keranjangdetail.harga*(this.state.jumlah-1)
-      })
+        jumlah: this.state.jumlah - 1,
+        totalHarga: this.state.keranjangdetail.harga * (this.state.jumlah - 1),
+      });
     }
-  }
+  };
 
-  handleSubmit = (e) => {
+  handleSubmit = (e, menuKeranjang) => {
     e.preventDefault();
+    axios
+      .put(`api/v1/checkout/${menuKeranjang.keranjangdetail.id_checkout}`, {
+        jumlah: menuKeranjang.jumlah,
+        total_harga: menuKeranjang.totalHarga,
+        id_products: menuKeranjang.keranjangdetail.id_products,
+      })
+      .then(() => {
+        swal({
+          title: "Berhasil Menambahkan ke Keranjang!",
+          text: "Berhasil Masuk Keranjang",
+          icon: "success",
+          timer: 1500,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        console.log("ini errornya s : ", error);
+      });
+  };
 
-    // const data =  {
-    //   jumlah : this.state.jumlah,
-    //   total_harga : this.state.totalHarga,
-    //   id_products : this.state.keranjangdetail.id_products,
-    //   user_id : Storage.get("user_id").data;
-
-    // }
-          axios
-            .post("api/v1/checkout", {
-              jumlah,
-              total_harga,
-              id_products,
-              user_id,
-            })
-            .then((res) => {
-              this.getListKeranjang();
-              swal({
-                title: "Berhasil Menambahkan ke Keranjang!",
-                text: "Berhasil Masuk Keranjang " + value.name_products,
-                icon: "success",
-                timer: 1500,
-              });
-            })
-            .catch((error) => {
-              console.log("ini errornya s : ", error);
+  handleDelete = (e, menuKeranjang) => {
+    e.preventDefault();
+    swal({
+      title: "Hapus Pesanan!",
+      text: "apakah kamu yakin ingin menghapus pesanan?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios
+          .delete(
+            `api/v1/checkout/${menuKeranjang.keranjangdetail.id_checkout}`
+          )
+          .then(() => {
+            swal({
+              title: "Hapus Berhasil!",
+              text: "pesanan berhasil dihapus",
+              icon: "success",
+            }).then(() => {
+              window.location.reload();
             });
-  }
+          })
+          .catch((error) => {
+            console.log("ini errornya s : ", error);
+          });
+      }
+    });
+  };
 
   handleClose = () => {
     this.setState({ showmodal: false });
@@ -125,7 +153,14 @@ export default class hasil extends Component {
               </ListGroup.Item>
             ))}
 
-            <ModalKeranjang handleClose={this.handleClose} handleSubmit={this.handleSubmit} {...this.state} tambah={this.tambah} kurang={this.kurang} />
+            <ModalKeranjang
+              handleClose={this.handleClose}
+              handleSubmit={(e) => this.handleSubmit(e, { ...this.state })}
+              {...this.state}
+              tambah={this.tambah}
+              kurang={this.kurang}
+              handleDelete={(e) => this.handleDelete(e, { ...this.state })}
+            />
           </ListGroup>
         )}
         <TotalBayar keranjangs={keranjangs} />
