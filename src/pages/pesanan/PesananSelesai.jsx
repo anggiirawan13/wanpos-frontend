@@ -38,22 +38,18 @@ export default function PesananSelesai() {
             {/* Dashboard actions */}
             <div className="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
               <div className="p-3">
-                <table className="table-auto w-full dark:text-slate-300">
+                <table className="table-auto w-full dark:text-slate-300 text-center">
                   {/* Table header */}
                   <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                     <tr>
                       <th className="p-2">
-                        <div className="font-semibold text-left">ID Order</div>
+                        <div className="font-semibold">ID Order</div>
                       </th>
                       <th className="p-2">
-                        <div className="font-semibold text-center">
-                          Nama Lengkap
-                        </div>
+                        <div className="font-semibold">Nama Lengkap</div>
                       </th>
                       <th className="p-2">
-                        <div className="font-semibold text-center">
-                          Total Bayar
-                        </div>
+                        <div className="font-semibold">Total Bayar</div>
                       </th>
                     </tr>
                   </thead>
@@ -65,15 +61,15 @@ export default function PesananSelesai() {
                     {order.map((item, index) => (
                       <tr key={index}>
                         <td className="p-2">
-                          <div className="text-center">{item.id_order}</div>
+                          <div>{item.id_order}</div>
                         </td>
                         <td className="p-2">
-                          <div className="text-center text-emerald-500">
+                          <div className="text-emerald-500">
                             {item.nama_lengkap}
                           </div>
                         </td>
                         <td className="p-2">
-                          <div className="text-center">{item.total_bayar}</div>
+                          <div>{item.total_bayar}</div>
                         </td>
                       </tr>
                     ))}
