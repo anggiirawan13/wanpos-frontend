@@ -5,6 +5,8 @@ import Banner from "../../partials/Banner";
 import axios from "axios";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import swal from "sweetalert";
 
 function Product() {
   useEffect(() => {
@@ -14,9 +16,31 @@ function Product() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [product, setProduct] = useState([]);
 
-  const getProduct = async () => {
-    const response = await axios.get(`api/v1/listProduct`);
-    setProduct(response.data.result);
+  const getProduct = () => {
+    axios.get(`api/v1/listProduct`).then((response) => {
+      setProduct(response.data.result);
+    });
+  };
+
+  const deleteProduct = (id, filename) => {
+    swal({
+      title: "Hapus Produk",
+      text: "apakah kamu yakin ingin menghapus produk ini?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios.delete(`api/v1/product/${id}/${filename}`).then(() => {
+          getProduct();
+          swal({
+            title: "Hapus Berhasil",
+            text: "produk berhasil dihapus",
+            icon: "success",
+          });
+        });
+      }
+    });
   };
 
   return (
@@ -51,28 +75,25 @@ function Product() {
             {/* Dashboard actions */}
             <div className="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
               <div className="p-3">
-                <table className="table-auto w-full dark:text-slate-300">
+                <table className="table-auto w-full dark:text-slate-300 text-center">
                   {/* Table header */}
                   <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                     <tr>
                       <th className="p-2">
-                        <div className="font-semibold text-left">
-                          Nama Product
-                        </div>
+                        <div className="font-semibold">Nama Product</div>
                       </th>
                       <th className="p-2">
-                        <div className="font-semibold text-center">
-                          Harga Product
-                        </div>
+                        <div className="font-semibold">Harga Product</div>
                       </th>
                       <th className="p-2">
-                        <div className="font-semibold text-center">
-                          Deskripsi Product
-                        </div>
+                        <div className="font-semibold">Stok Product</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold">Deskripsi Product</div>
                       </th>
 
                       <th className="p-2">
-                        <div className="font-semibold text-center">Action</div>
+                        <div className="font-semibold">Actions</div>
                       </th>
                     </tr>
                   </thead>
@@ -90,13 +111,30 @@ function Product() {
                         </td>
                         <td className="p-2">
                           <div className="text-center text-emerald-500">
+                            {item.harga}
+                          </div>
+                        </td>
+                        <td className="p-2">
+                          <div className="text-center text-emerald-500">
+                            {item.stock}
+                          </div>
+                        </td>
+                        <td className="p-2">
+                          <div className="text-center">
                             {item.desc_products}
                           </div>
                         </td>
                         <td className="p-2">
-                          <div className="text-center">{item.team}</div>
-                        </td>
-                        <td className="p-2">
+                          <Button
+                            type="input"
+                            variant="danger"
+                            className="mr-2"
+                            onClick={() =>
+                              deleteProduct(item.id_products, item.files)
+                            }
+                          >
+                            Hapus
+                          </Button>
                           <Link
                             to={`/edit-product/${item.id_products}`}
                             className="btn bg-primary text-white"
