@@ -16,12 +16,61 @@ export default class hasil extends Component {
       showmodal: false,
       keranjangdetail: false,
       keterangan: "",
+      jumlah: 0,
+      totalHarga: 0,
     };
   }
 
   handleShow = (menuKerajang) => {
-    this.setState({ showmodal: true, keranjangdetail: menuKerajang });
+    this.setState({ showmodal: true, keranjangdetail: menuKerajang, jumlah: menuKerajang.jumlah, totalHarga: menuKerajang.total_harga });
   };
+
+  tambah = () => {
+    this.setState({
+      jumlah: this.state.jumlah+1,
+      totalHarga: this.state.keranjangdetail.harga*(this.state.jumlah+1)
+    })
+  }
+
+  kurang = () => {
+    if ( this.state.jumlah !== 1 ) {
+      this.setState({
+        jumlah: this.state.jumlah-1,
+        totalHarga: this.state.keranjangdetail.harga*(this.state.jumlah-1)
+      })
+    }
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    // const data =  {
+    //   jumlah : this.state.jumlah,
+    //   total_harga : this.state.totalHarga,
+    //   id_products : this.state.keranjangdetail.id_products,
+    //   user_id : Storage.get("user_id").data;
+
+    // }
+          axios
+            .post("api/v1/checkout", {
+              jumlah,
+              total_harga,
+              id_products,
+              user_id,
+            })
+            .then((res) => {
+              this.getListKeranjang();
+              swal({
+                title: "Berhasil Menambahkan ke Keranjang!",
+                text: "Berhasil Masuk Keranjang " + value.name_products,
+                icon: "success",
+                timer: 1500,
+              });
+            })
+            .catch((error) => {
+              console.log("ini errornya s : ", error);
+            });
+  }
 
   handleClose = () => {
     this.setState({ showmodal: false });
@@ -76,7 +125,7 @@ export default class hasil extends Component {
               </ListGroup.Item>
             ))}
 
-            <ModalKeranjang handleClose={this.handleClose} {...this.state} />
+            <ModalKeranjang handleClose={this.handleClose} handleSubmit={this.handleSubmit} {...this.state} tambah={this.tambah} kurang={this.kurang} />
           </ListGroup>
         )}
         <TotalBayar keranjangs={keranjangs} />
