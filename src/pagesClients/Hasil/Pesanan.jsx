@@ -69,8 +69,12 @@ export default class Pesanan extends Component {
       status: "menunggu_konfirmasi",
     };
 
-    axios.post(`api/v1/checkout/orderPesanan`, form).then((res) => {
-      console.log("res orderan", res);
+    axios.post(`api/v1/checkout/orderPesanan`, form).then(() => {
+      swal({
+        title: "Konfirmasi Berhasil!",
+        text: "pesanan telah dikonfirmasi",
+        icon: "success",
+      });
     });
   };
 
