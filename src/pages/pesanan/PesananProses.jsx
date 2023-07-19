@@ -25,7 +25,6 @@ export default function PesananProses() {
     axios
       .put(`/api/v1/order/${idOrder}/selesai`)
       .then(() => {
-        getOrder();
         swal({
           title: "Order Selesai!",
           text: "order telah selesai",

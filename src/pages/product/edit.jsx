@@ -7,12 +7,14 @@ import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import swal from "sweetalert";
 
 function EditProduct() {
   const { id_product } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getCompanyById();
+    getProductById();
   }, []);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -24,28 +26,28 @@ function EditProduct() {
   let [stock, setStockProduct] = useState("");
   let [file, setFile] = useState(null);
 
-  const getCompanyById = () => {
+  const getProductById = () => {
     try {
       axios.get(`/api/v1/product/${id_product}`).then((response) => {
-        console.log(response);
-        setKodeProduct(response.data.kode);
-        setNameProduct(response.data.name_products);
-        setDescProduct(response.data.desc_products);
-        setVariantProduct(response.data.variant);
-        setHarga(response.data.harga);
-        setStockProduct(response.data.stock);
-        setFile(response.data.file);
+        const result = response.data.result[0];
+        setKodeProduct(result.kode);
+        setNameProduct(result.name_products);
+        setDescProduct(result.desc_products);
+        setVariantProduct(result.variant);
+        setHarga(result.harga);
+        setStockProduct(result.stock);
+        setFile(result.files);
       });
     } catch (error) {
       console.log("error", error);
     }
   };
 
-  const updateCompany = async (e) => {
+  const updateProduct = (e) => {
     e.preventDefault();
-    const navigate = useNavigate();
     try {
       let formData = new FormData();
+      formData.append("id_products", id_product);
       formData.append("kode", kode);
       formData.append("name_products", name_products);
       formData.append("desc_products", desc_products);
@@ -54,8 +56,15 @@ function EditProduct() {
       formData.append("stock", stock);
       formData.append("file", file);
 
-      axios.put(`api/v1/updateProduct/${id_product}`, formData).then(() => {
-        navigate("/");
+      axios.put(`/api/v1/updateProduct/${id_product}`, formData).then(() => {
+        swal({
+          title: "Update Berhasil!",
+          text: "product berhasil di update",
+          icon: "success",
+          timer: 1500,
+        }).then(() => {
+          navigate("/product-page");
+        });
       });
     } catch (error) {
       console.log("error", error);
@@ -83,7 +92,7 @@ function EditProduct() {
               <div className="p-3">
                 {/* Table */}
 
-                <Form onSubmit={updateCompany}>
+                <Form onSubmit={updateProduct}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Group controlId="formFile" className="mb-3">
                       <Form.Label>Ubah foto produk</Form.Label>

@@ -8,16 +8,15 @@ import { Link } from "react-router-dom";
 
 function Product() {
   useEffect(() => {
-    getCompany();
+    getProduct();
   }, []);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [company, setCompany] = useState([]);
+  const [product, setProduct] = useState([]);
 
-  const getCompany = async () => {
+  const getProduct = async () => {
     const response = await axios.get(`api/v1/listProduct`);
-    console.log(response);
-    setCompany(response.data.result);
+    setProduct(response.data.result);
   };
 
   return (
@@ -32,12 +31,23 @@ function Product() {
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            <h2 className="font-semibold text-slate-900 mb-3 dark:text-slate-100">
-              Informasi Produk
-            </h2>
-            <Link to={"/tambah-produk"} className="btn bg-primary text-white">
-              Tambah Produk
-            </Link>
+            <table className="table-auto w-full mb-1">
+              <thead>
+                <th>
+                  <h2 className="font-semibold text-slate-900 mb-3 dark:text-slate-100">
+                    Informasi Produk
+                  </h2>
+                </th>
+                <th className="text-right">
+                  <Link
+                    to={"/tambah-produk"}
+                    className="btn bg-primary text-white"
+                  >
+                    Tambah Produk
+                  </Link>
+                </th>
+              </thead>
+            </table>
             {/* Dashboard actions */}
             <div className="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
               <div className="p-3">
@@ -71,7 +81,7 @@ function Product() {
                   <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                     {/* Row */}
 
-                    {company.map((item, index) => (
+                    {product.map((item, index) => (
                       <tr key={index}>
                         <td className="p-2">
                           <div className="text-center">
@@ -89,10 +99,9 @@ function Product() {
                         <td className="p-2">
                           <Link
                             to={`/edit-product/${item.id_products}`}
-                            className="btn bg-primary"
+                            className="btn bg-primary text-white"
                           >
-                            {" "}
-                            Ubah{" "}
+                            Ubah
                           </Link>
                         </td>
                       </tr>
