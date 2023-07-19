@@ -32,7 +32,7 @@ export default function Signup() {
 
     axios.post(`api/v1/createUser`, values).then((res) => {
       toast.success(res.data.message);
-      navigate("/");
+      navigate("/dashboard");
     });
   };
 
