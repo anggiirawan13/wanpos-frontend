@@ -16,7 +16,7 @@ import PesananBaru from "./pages/pesanan/pesananBaru.jsx";
 import PesananProses from "./pages/pesanan/pesananProses.jsx";
 import PesananSelesai from "./pages/pesanan/PesananSelesai.jsx";
 import axiosInterceptors from "./security/AxiosInterceptor.jsx";
-import SecuredRoute from "./security/SecuredRoute.js";
+import SecuredRoute from "./security/SecuredRoute.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
 import "./charts/ChartjsConfig";

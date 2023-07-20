@@ -1,6 +1,6 @@
 import axios from "axios";
 import ClearSession from "./ClearSession.jsx";
-import Storage from "../Storage/storage.js";
+import Storage from "../Storage/storage.jsx";
 
 export default function axiosInterceptors() {
   axios.interceptors.request.use(

@@ -1,10 +1,30 @@
-import React from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 function DashboardCard07() {
+  useEffect(() => {
+    getTop();
+  }, []);
+
+  const [top, setTop] = useState([]);
+
+  const getTop = () => {
+    axios
+      .get("/api/v1/checkout/top")
+      .then((res) => {
+        setTop(res.data.result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
-        <h2 className="font-semibold text-slate-800 dark:text-slate-100">Produk terlaris</h2>
+        <h2 className="font-semibold text-slate-800 dark:text-slate-100">
+          Produk terlaris
+        </h2>
       </header>
       <div className="p-3">
         {/* Table */}
@@ -27,49 +47,28 @@ function DashboardCard07() {
             {/* Table body */}
             <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
               {/* Row */}
-              <tr>
-                <td className="p-2">
-                  <div className="flex items-center">
-                    <div className="text-slate-800 dark:text-slate-100">Roti Bakar</div>
-                  </div>
-                </td>
-               
-                <td className="p-2">
-                  <div className="text-center text-emerald-500">Coklat Susu</div>
-                </td>
-                <td className="p-2">
-                  <div className="text-center text-sky-500">4.7%</div>
-                </td>
-              </tr>
-              {/* Row */}
-              <tr>
-                <td className="p-2">
-                  <div className="flex items-center">
-                    <div className="text-slate-800 dark:text-slate-100">Roti Sobek</div>
-                  </div>
-                </td>
-              
-                <td className="p-2">
-                  <div className="text-center">Strowberry</div>
-                </td>
-                <td className="p-2">
-                  <div className="text-center text-sky-500">4.4%</div>
-                </td>
-              </tr>
-              {/* Row */}
-              <tr>
-                <td className="p-2">
-                  <div className="flex items-center">
-                    <div className="text-slate-800 dark:text-slate-100">Pisang Coklat</div>
-                  </div>
-                </td>
-                <td className="p-2">
-                  <div className="text-center">Pisang Bakar Mozarela</div>
-                </td>
-                <td className="p-2">
-                  <div className="text-center text-sky-500">4.2%</div>
-                </td>
-              </tr>
+              {top.map((item, index) => (
+                <tr key={index}>
+                  <td className="p-2">
+                    <div className="flex items-center">
+                      <div className="text-slate-800 dark:text-slate-100">
+                        {item.name_products}
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="p-2">
+                    <div className="text-center text-emerald-500">
+                      {item.variant}
+                    </div>
+                  </td>
+                  <td className="p-2">
+                    <div className="text-center text-sky-500">
+                      {Math.ceil(item.purchased)}%
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

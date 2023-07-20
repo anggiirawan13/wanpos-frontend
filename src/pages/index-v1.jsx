@@ -6,7 +6,7 @@ import swal from "sweetalert";
 
 import Hasil from "./Hasil/hasil";
 import axios from "axios";
-import Storage from "../../src/Storage/storage.js";
+import Storage from "../../src/Storage/storage.jsx";
 
 export default class DaftarMenu extends Component {
   constructor(props) {
