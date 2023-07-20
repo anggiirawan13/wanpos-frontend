@@ -1,5 +1,6 @@
 import axios from "axios";
 import Storage from "../Storage/storage.jsx";
+import ClearSession from "./ClearSession.jsx";
 
 export default function axiosInterceptors() {
   axios.interceptors.request.use(
@@ -9,9 +10,7 @@ export default function axiosInterceptors() {
       return req;
     },
     (err) => {
-      localStorage.clear();
-
-      window.location.href = "/login";
+      ClearSession();
     }
   );
 
@@ -20,9 +19,7 @@ export default function axiosInterceptors() {
       return res;
     },
     (err) => {
-      localStorage.clear();
-
-      window.location.href = "/login";
+      ClearSession();
     }
   );
 }

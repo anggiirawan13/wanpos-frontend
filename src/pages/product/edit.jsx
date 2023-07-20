@@ -64,7 +64,7 @@ function EditProduct() {
           icon: "success",
           timer: 1500,
         }).then(() => {
-          navigate("/product-page");
+          navigate("/product");
         });
       });
     } catch (error) {
@@ -172,7 +172,7 @@ function EditProduct() {
                   </Form.Group>
 
                   <Link
-                    to={`/product-page`}
+                    to={`/product`}
                     className="btn bg-secondary text-white mr-2"
                   >
                     Kembali

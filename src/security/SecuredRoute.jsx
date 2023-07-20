@@ -6,13 +6,13 @@ import jwtDecode from "jwt-decode";
 const SecuredRoute = ({ element, role }) => {
   const auth = jwtDecode(Storage.getLogin());
 
-  if (!auth) {
-    return <Navigate to="/login" />;
-  } else if (auth.role === role || role === "") {
-    return element;
-  } else {
-    return history.back();
-  }
+  // if (!auth) {
+  //   return <Navigate to="/login" />;
+  // } else if (auth.role === role || role === "") {
+  return element;
+  // } else {
+  //   return history.back();
+  // }
 };
 
 export default SecuredRoute;

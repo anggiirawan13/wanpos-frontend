@@ -49,7 +49,7 @@ function EditPerusahaan() {
             icon: "success",
             timer: 1500,
           }).then(() => {
-            navigate("/listCompany");
+            navigate("/company");
           });
         });
     } catch (error) {
@@ -112,7 +112,7 @@ function EditPerusahaan() {
                     />
                   </Form.Group>
                   <Link
-                    to={`/listCompany`}
+                    to={`/company`}
                     className="btn bg-secondary text-white mr-2"
                   >
                     Kembali
