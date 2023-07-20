@@ -50,9 +50,9 @@ function Dashboard() {
       .then((res) => {
         if (res.data.error === false) {
           toast.success("Berhasil Menambahkan Data Perusahaan");
-          navigate("/");
+          navigate("/listCompany");
         } else {
-          toast.warning("ga");
+          toast.warning("Berhasil");
         }
       });
   };
@@ -115,7 +115,6 @@ function Dashboard() {
                           type="text"
                           name="desc_company"
                           onChange={(e) => setDescName(e.target.value)}
-                          placeholder="Enter"
                         />
                       </Form.Group>
 
@@ -125,7 +124,6 @@ function Dashboard() {
                           type="text"
                           name="alamat"
                           onChange={(e) => setAlamat(e.target.value)}
-                          placeholder="Enter"
                         />
                       </Form.Group>
 
@@ -159,33 +157,10 @@ function Dashboard() {
             </div>
 
             {/* Cards */}
-            <div className="grid grid-cols-12 gap-6">
-              {/* Line chart (Acme Plus) */}
-              <DashboardCard01 />
-              {/* Line chart (Acme Advanced) */}
-              <DashboardCard02 />
-              {/* Line chart (Acme Professional) */}
-              <DashboardCard03 />
-              {/* Bar chart (Direct vs Indirect) */}
-              <DashboardCard04 />
-              {/* Line chart (Real Time Value) */}
+            <div className="grid grid-cols-6 gap-6">
               <DashboardCard05 />
-              {/* Doughnut chart (Top Countries) */}
-              <DashboardCard06 />
-              {/* Table (Top Channels) */}
               <DashboardCard07 />
-              {/* Line chart (Sales Over Time) */}
-              <DashboardCard08 />
-              {/* Stacked bar chart (Sales VS Refunds) */}
-              <DashboardCard09 />
-              {/* Card (Customers) */}
-              <DashboardCard10 />
-              {/* Card (Reasons for Refunds) */}
               <DashboardCard11 />
-              {/* Card (Recent Activity) */}
-              <DashboardCard12 />
-              {/* Card (Income/Expenses) */}
-              <DashboardCard13 />
             </div>
           </div>
         </main>

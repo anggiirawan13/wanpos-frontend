@@ -2,7 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Transition from "../utils/Transition";
 
-import UserAvatar from "../images/user-avatar-32.png";
+import UserAvatar from '../images/user-avatar-32.png';
+import Storage from '../Storage/storage';
+
+
 
 function DropdownProfile({ align }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -53,13 +56,8 @@ function DropdownProfile({ align }) {
           alt="User"
         />
         <div className="flex items-center truncate">
-          <span className="truncate ml-2 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">
-            Acme Inc.
-          </span>
-          <svg
-            className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400"
-            viewBox="0 0 12 12"
-          >
+          <span className="truncate ml-2 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{Storage.get('username').data}</span>
+          <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
           </svg>
         </div>
@@ -83,12 +81,8 @@ function DropdownProfile({ align }) {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-slate-700">
-            <div className="font-medium text-slate-800 dark:text-slate-100">
-              Acme Inc.
-            </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 italic">
-              Administrator
-            </div>
+            <div className="font-medium text-slate-800 dark:text-slate-100">{Storage.get('username').data}</div>
+            <div className="text-xs text-slate-500 dark:text-slate-400 italic">Administrator</div>
           </div>
           <ul>
             <li>

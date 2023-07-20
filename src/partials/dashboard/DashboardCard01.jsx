@@ -6,6 +6,7 @@ import EditMenu from '../../components/DropdownEditMenu';
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from '../../utils/Utils';
+import Storage from '../../Storage/storage';
 
 function DashboardCard01() {
 
@@ -97,7 +98,7 @@ function DashboardCard01() {
             </li>
           </EditMenu>
         </header>
-        <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">Acme Plus</h2>
+        <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">{Storage.get('username').data}</h2>
         <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">Sales</div>
         <div className="flex items-start">
           <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">$24,780</div>
