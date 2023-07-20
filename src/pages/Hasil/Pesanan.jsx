@@ -3,7 +3,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Order from "../Hasil/order.jsx";
 import axios from "axios";
-import Storage from "../../Storage/storage.jsx";
+import Storage from "../../Storage/storage.js";
 
 export default class Pesanan extends Component {
   constructor(props) {

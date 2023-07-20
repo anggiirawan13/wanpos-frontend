@@ -6,7 +6,7 @@ import swal from "sweetalert";
 
 import Hasil from "./Hasil/hasil";
 import axios from "axios";
-import Storage from "../../src/Storage/storage";
+import Storage from "../../src/Storage/storage.js";
 
 export default class DaftarMenu extends Component {
   constructor(props) {
@@ -118,7 +118,7 @@ export default class DaftarMenu extends Component {
                 {menus &&
                   menus.map((menu, index) => (
                     <Menus
-                      key={menu.id_products}
+                      key={index}
                       menus={menu}
                       masukKeranjang={this.masukKeranjang}
                     />
