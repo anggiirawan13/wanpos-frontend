@@ -1,12 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { Input } from "@material-tailwind/react";
 import Button from "react-bootstrap/Button";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import Storage from "../../Storage/storage";
 
 export default function Login() {

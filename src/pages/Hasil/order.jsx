@@ -75,7 +75,10 @@ export default class hasil extends Component {
               </ListGroup.Item>
             ))}
 
-            <ModalKeranjang handleClose={this.handleClose} {...this.state} />
+            <ModalKeranjang
+              handleClose={() => this.handleClose()}
+              {...this.state}
+            />
           </ListGroup>
         )}
       </Col>

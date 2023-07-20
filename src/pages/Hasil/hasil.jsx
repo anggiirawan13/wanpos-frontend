@@ -154,12 +154,12 @@ export default class hasil extends Component {
             ))}
 
             <ModalKeranjang
-              handleClose={this.handleClose}
-              handleSubmit={(e) => this.handleSubmit(e, { ...this.state })}
               {...this.state}
-              tambah={this.tambah}
-              kurang={this.kurang}
+              handleClose={() => this.handleClose()}
+              handleSubmit={(e) => this.handleSubmit(e, { ...this.state })}
               handleDelete={(e) => this.handleDelete(e, { ...this.state })}
+              tambah={() => this.tambah()}
+              kurang={() => this.kurang()}
             />
           </ListGroup>
         )}

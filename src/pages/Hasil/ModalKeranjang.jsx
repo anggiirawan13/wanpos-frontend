@@ -11,16 +11,15 @@ function numberWithComas(x) {
 
 const modalKeranjang = ({
   handleClose,
+  handleSubmit,
+  handleDelete,
+  tambah,
+  kurang,
   showmodal,
   keranjangdetail,
   jumlah,
-  tambah,
-  kurang,
-  handleSubmit,
   totalHarga,
-  handleDelete,
 }) => {
-  console.log("keranjang", keranjangdetail);
   if (keranjangdetail) {
     return (
       <Modal show={showmodal} onHide={handleClose}>
@@ -41,7 +40,7 @@ const modalKeranjang = ({
             <br />
             <Button
               variant="primary"
-              onClick={() => kurang()}
+              onClick={kurang}
               size="sm"
               className="bg-danger mr-2"
             >
@@ -50,7 +49,7 @@ const modalKeranjang = ({
             <strong>{jumlah}</strong>
             <Button
               variant="primary"
-              onClick={() => tambah()}
+              onClick={tambah}
               size="sm"
               className="btn-add bg-primary ml-2"
             >

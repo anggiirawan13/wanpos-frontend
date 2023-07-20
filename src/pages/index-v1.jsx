@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar/index";
 import { Col, Container, Row } from "react-bootstrap";
-import Menus from "../pagesClients/Menus/menu";
+import Menus from "../pages/Menus/menu";
 import swal from "sweetalert";
 
 import Hasil from "./Hasil/hasil";
