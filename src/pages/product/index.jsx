@@ -17,7 +17,7 @@ function Product() {
   const [product, setProduct] = useState([]);
 
   const getProduct = () => {
-    axios.get(`api/v1/listProduct`).then((response) => {
+    axios.get(`api/v1/product`).then((response) => {
       setProduct(response.data.result);
     });
   };

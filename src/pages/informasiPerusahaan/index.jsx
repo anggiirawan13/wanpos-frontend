@@ -17,7 +17,7 @@ function Dashboard() {
   const [company, setCompany] = useState([]);
 
   const getCompany = () => {
-    axios.get(`api/v1/listCompany`).then((response) => {
+    axios.get(`api/v1/company`).then((response) => {
       setCompany(response.data.result);
     });
   };

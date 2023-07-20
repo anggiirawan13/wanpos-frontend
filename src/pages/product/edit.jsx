@@ -57,7 +57,7 @@ function EditProduct() {
       formData.append("file", file);
       console.log(file);
 
-      axios.put(`/api/v1/updateProduct/${id_product}`, formData).then(() => {
+      axios.put(`/api/v1/product/${id_product}`, formData).then(() => {
         swal({
           title: "Update Berhasil!",
           text: "product berhasil di update",
