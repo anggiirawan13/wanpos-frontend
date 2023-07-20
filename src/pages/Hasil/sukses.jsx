@@ -17,7 +17,7 @@ export default class DaftarMenu extends Component {
     return (
       <>
         <Navbar />
-        <Container></Container>
+        <Container />
       </>
     );
   }

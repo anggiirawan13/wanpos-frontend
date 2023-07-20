@@ -1,12 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { Input } from "@material-tailwind/react";
 import Button from "react-bootstrap/Button";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import Storage from "../../Storage/storage";
 
 export default function Login() {
@@ -19,16 +17,17 @@ export default function Login() {
     e.preventDefault();
 
     axios
-      .post(`/api/v1/login`, { email, password })
+      .post(`/api/v1/user/login`, { email, password })
       .then((res) => {
-        if (res.data.error == false) {
-          Storage.set("user_id", { data: res.data.data.user_id });
-          Storage.set("username", { data: res.data.data.name });
+        console.log(res.data);
+        if (!res.data.error) {
+          Storage.set("user_id", { data: res.data.result.user_id });
+          Storage.set("username", { data: res.data.result.name });
+          Storage.set("role", { data: res.data.result.role });
 
-          toast.success(res.data.message);
+          Storage.setLogin(res.data.result.token);
+
           navigate("/roti-sobek");
-        } else {
-          toast.warning(res.data.message);
         }
       })
       .catch((error) => {

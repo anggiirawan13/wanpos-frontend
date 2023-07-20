@@ -57,14 +57,14 @@ function EditProduct() {
       formData.append("file", file);
       console.log(file);
 
-      axios.put(`/api/v1/updateProduct/${id_product}`, formData).then(() => {
+      axios.put(`/api/v1/product/${id_product}`, formData).then(() => {
         swal({
           title: "Update Berhasil!",
           text: "product berhasil di update",
           icon: "success",
           timer: 1500,
         }).then(() => {
-          navigate("/product-page");
+          navigate("/product");
         });
       });
     } catch (error) {
@@ -172,7 +172,7 @@ function EditProduct() {
                   </Form.Group>
 
                   <Link
-                    to={`/product-page`}
+                    to={`/product`}
                     className="btn bg-secondary text-white mr-2"
                   >
                     Kembali

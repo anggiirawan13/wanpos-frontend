@@ -34,7 +34,7 @@ export default class totalBayar extends Component {
               <FontAwesomeIcon
                 className="text-white mr-5"
                 icon={faShoppingCart}
-              />{" "}
+              />
               Pesan
             </Link>
           </Col>
