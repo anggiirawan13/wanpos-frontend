@@ -1,6 +1,6 @@
 import axios from "axios";
-import Storage from "../Storage/storage.jsx";
 import ClearSession from "./ClearSession.jsx";
+import Storage from "../Storage/storage.jsx";
 
 export default function axiosInterceptors() {
   axios.interceptors.request.use(
@@ -11,6 +11,7 @@ export default function axiosInterceptors() {
     },
     (err) => {
       ClearSession();
+      history.pushState(null, null, "/login");
     }
   );
 
@@ -20,6 +21,7 @@ export default function axiosInterceptors() {
     },
     (err) => {
       ClearSession();
+      history.pushState(null, null, "/login");
     }
   );
 }

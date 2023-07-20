@@ -27,7 +27,7 @@ export default class Pesanan extends Component {
 
   componentDidMount() {
     axios
-      .get(`api/v1/product`)
+      .get(`/api/v1/product`)
       .then((res) => {
         const menus = res.data.result;
         this.setState({ menus });
@@ -57,26 +57,24 @@ export default class Pesanan extends Component {
     e.preventDefault();
 
     let form = {
-      nama_lengkap: this.state.nama_lengkap,
       id_user: Storage.get("user_id").data,
-      total_bayar: this.state.total_bayar,
+      nama_lengkap: this.state.nama_lengkap,
       alamat: this.state.alamat,
       no_tlp: this.state.no_tlp,
-      no_rek: this.state.no_rek,
       nama_rekening: this.state.nama_rekening,
+      no_rek: this.state.no_rek,
+      total_bayar: this.state.total_bayar,
       metode_pemesanan: this.state.metode_pemesanan,
       status_pengiriman: this.state.status_pengiriman,
       status: "menunggu_konfirmasi",
     };
 
-
-    axios.post(`api/v1/checkout/orderPesanan`, form).then((res) => {
+    axios.post(`api/v1/checkout/order`, form).then(() => {
       swal({
         title: "Konfirmasi Berhasil!",
         text: "pesanan telah dikonfirmasi",
         icon: "success",
       });
-      
     });
   };
 
@@ -164,7 +162,12 @@ export default class Pesanan extends Component {
                     />
                   </Form.Group>
 
-                  <Form.Select aria-label="Default select example">
+                  <Form.Select
+                    aria-label="Default select example"
+                    onChange={(e) =>
+                      this.setState({ metode_pemesanan: e.target.value })
+                    }
+                  >
                     <option>Metode Pembayaran</option>
                     <option value="1">BCA Virtual account</option>
                     <option value="2">Di ambil Sendiri</option>

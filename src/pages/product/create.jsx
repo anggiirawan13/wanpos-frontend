@@ -31,7 +31,7 @@ function CreateProduct() {
       formData.append("stock", stock);
       formData.append("file", file);
 
-      await axios.post("api/v1/product", formData).then((res) => {
+      await axios.post("/api/v1/product", formData).then((res) => {
         swal({
           title: "Berhasil!",
           text: "berhasil menambahkan product baru",

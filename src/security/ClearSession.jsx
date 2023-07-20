@@ -5,8 +5,6 @@ const ClearSession = () => {
   Storage.delete("username");
   Storage.delete("role");
   Storage.delete("acctok");
-
-  window.location.href = "/login";
 };
 
 export default ClearSession;
