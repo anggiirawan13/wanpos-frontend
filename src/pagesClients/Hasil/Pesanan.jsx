@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Order from "../Hasil/order";
 import axios from "axios";
 import Storage from "../../Storage/storage";
+import { redirect, useNavigate } from "react-router-dom";
 
 export default class Pesanan extends Component {
   constructor(props) {
@@ -57,24 +58,26 @@ export default class Pesanan extends Component {
     e.preventDefault();
 
     let form = {
-      id_user: Storage.get("user_id").data,
       nama_lengkap: this.state.nama_lengkap,
+      id_user: Storage.get("user_id").data,
+      total_bayar: this.state.total_bayar,
       alamat: this.state.alamat,
       no_tlp: this.state.no_tlp,
-      nama_rekening: this.state.nama_rekening,
       no_rek: this.state.no_rek,
-      total_bayar: this.state.total_bayar,
+      nama_rekening: this.state.nama_rekening,
       metode_pemesanan: this.state.metode_pemesanan,
       status_pengiriman: this.state.status_pengiriman,
       status: "menunggu_konfirmasi",
     };
 
-    axios.post(`api/v1/checkout/orderPesanan`, form).then(() => {
+
+    axios.post(`api/v1/checkout/orderPesanan`, form).then((res) => {
       swal({
         title: "Konfirmasi Berhasil!",
         text: "pesanan telah dikonfirmasi",
         icon: "success",
       });
+      
     });
   };
 

@@ -26,7 +26,7 @@ export default function Login() {
 
         if (res.status === 200) {
           toast.success("Berhasil Masuk");
-          navigate("/");
+          navigate("/dashboard");
         } else {
           toast.warning(res.data.message);
         }

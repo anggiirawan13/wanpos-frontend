@@ -18,7 +18,7 @@ import CreateProduct from "./pages/product/create";
 // Client
 import DaftarMenu from "../src/pagesClients/index-v1";
 import Sukses from "../src/pagesClients/Hasil/sukses";
-import Signup from "./pages/Sign";
+import Signup from "./pages/Sign/index";
 import SignupAdmin from "./pages/Sign/sign-up-admin";
 import Login from "./pages/login_user";
 import LoginAdmin from "./pages/login_admin";

@@ -16,25 +16,21 @@ export default class hasil extends Component {
   render() {
     return (
       <>
-        <h2 className="font-semibold text-center mt-3 text-slate-900 mb-3 dark:text-slate-100">
-          <strong>Cara melakukan Pembayaran</strong>
+        <h2 className="font-semibold text-center text-slate-900 mb-3 dark:text-slate-100"
+        style={{ marginTop: '180px'}}>
+          <strong>Konfirmasi Pembayaran</strong>
         </h2>
-        <Container>
-          <h1 className="text-center mt-5">BANK CENTRAL ASIA</h1>
-          <h1 className="text-center mt-5">a/n. ROTI SOBEK SLAMET</h1>
-          <h2 className="text-center mt-2" style={{ fontSize: "40px" }}>
-            8003428392
-          </h2>
-          <span className="text-center">
-            Mohon Lakukan Pembayaran ke no rekening tersebut. Konfirmasi jika
-            sudah melakukan pembayaran
-          </span>
-          <Link
-            to="/konfirmasi-pesanan"
-            className="text-center d-flex justify-center mt-5 mx-0 btn btn-primary"
+        <Link
+            to="whatsapp://send?phone=+628989193735&text=Hello%2C%20Saya ingin Konfirmasi pesanan saya ..."
+            className="text-center btn btn-success"
+            style={{'width': '120px', 'marginLeft': '620px'}}
           >
             Konfirmasi
           </Link>
+        <Container>
+         
+      
+         
         </Container>
       </>
     );

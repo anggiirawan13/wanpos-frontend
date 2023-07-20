@@ -49,7 +49,7 @@ export default function Signup() {
                 Sign Up
               </h2>
               <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">
-                Buat Akun lebih mudah dibawah ini
+                Buat Akun admin 
               </div>
 
               <div className="flex items-start mt-3">
@@ -118,7 +118,7 @@ export default function Signup() {
                   </Button>
 
                   <Link
-                    to={"/login"}
+                    to={"/login-admin"}
                     variant="primary"
                     className="bg-success btn btn-success ml-3"
                     type="submit"
