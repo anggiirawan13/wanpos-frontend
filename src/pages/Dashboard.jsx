@@ -46,7 +46,7 @@ function Dashboard() {
   const saveData = async (e) => {
     e.preventDefault();
     await axios
-      .post("api/v1/createCompany", { name_company, desc_company, alamat })
+      .post("api/v1/company", { name_company, desc_company, alamat })
       .then((res) => {
         if (res.data.error === false) {
           toast.success("Berhasil Menambahkan Data Perusahaan");

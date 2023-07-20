@@ -18,20 +18,23 @@ import CreateProduct from "./pages/product/create";
 // Client
 import DaftarMenu from "../src/pagesClients/index-v1";
 import Sukses from "../src/pagesClients/Hasil/sukses";
-import Signup from "./pages/Sign";
-import SignupAdmin from "./pages/Sign/sign-up-admin";
-import Login from "./pages/login_user";
-import LoginAdmin from "./pages/login_admin";
-import Pesanan from "./pages/../pagesClients/Hasil/Pesanan";
-import ClientPage from "../src/pagesClients/index";
-import AddProduk from "../src/pages/product/create";
-import Konfirmasi from "../src/pagesClients/Hasil/konfirmasi";
-import PesananBaru from "./pages/pesanan/pesananBaru";
-import PesananProses from "./pages/pesanan/pesananProses";
-import PesananSelesai from "./pages/pesanan/pesananSelesai";
+import Signup from "./pages/sign/index.jsx";
+import SignupAdmin from "./pages/Sign/sign-up-admin.jsx";
+import Login from "./pages/login_user/index.jsx";
+import LoginAdmin from "./pages/login_admin/index.jsx";
+import Pesanan from "./pages/../pagesClients/Hasil/Pesanan.jsx";
+import ClientPage from "../src/pagesClients/index.jsx";
+import AddProduk from "../src/pages/product/create.jsx";
+import Konfirmasi from "../src/pagesClients/Hasil/konfirmasi.jsx";
+import PesananBaru from "./pages/pesanan/pesananBaru.jsx";
+import PesananProses from "./pages/pesanan/pesananProses.jsx";
+import PesananSelesai from "./pages/pesanan/PesananSelesai.jsx";
+import axiosInterceptors from "./plugins/axiosInterceptors";
 
 function App() {
   const location = useLocation();
+
+  axiosInterceptors();
 
   useEffect(() => {
     document.querySelector("html").style.scrollBehavior = "auto";

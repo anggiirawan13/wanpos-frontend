@@ -18,7 +18,7 @@ export default class DaftarMenu extends Component {
 
   componentDidMount() {
     axios
-      .get(`api/v1/listProduct`)
+      .get(`api/v1/product`)
       .then((res) => {
         const menus = res.data.result;
         this.setState({ menus });

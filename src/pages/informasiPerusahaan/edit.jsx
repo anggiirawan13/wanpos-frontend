@@ -37,7 +37,7 @@ function EditPerusahaan() {
     e.preventDefault();
     try {
       axios
-        .put(`/api/v1/updateCompany/${id_company}`, {
+        .put(`/api/v1/company/${id_company}`, {
           companyName,
           companyDesc,
           companyAddress,

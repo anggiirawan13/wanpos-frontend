@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import Order from "../Hasil/order";
+import Order from "../Hasil/order.jsx";
 import axios from "axios";
-import Storage from "../../Storage/storage";
+import Storage from "../../Storage/storage.jsx";
 
 export default class Pesanan extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class Pesanan extends Component {
 
   componentDidMount() {
     axios
-      .get(`api/v1/listProduct`)
+      .get(`api/v1/product`)
       .then((res) => {
         const menus = res.data.result;
         this.setState({ menus });

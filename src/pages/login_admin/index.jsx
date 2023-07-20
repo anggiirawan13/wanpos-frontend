@@ -19,16 +19,17 @@ export default function Login() {
     e.preventDefault();
 
     axios
-      .post(`/api/v1/login`, { email, password })
+      .post(`/api/v1/user/login`, { email, password })
       .then((res) => {
-        Storage.set("user_id", { data: res.data.data.user_id });
-        Storage.set("username", { data: res.data.data.name });
+        console.log(res.data);
+        if (!res.data.result.error) {
+          Storage.set("user_id", { data: res.data.result.user_id });
+          Storage.set("username", { data: res.data.result.name });
+          Storage.set("role", { data: res.data.result.role });
 
-        if (res.status === 200) {
-          toast.success("Berhasil Masuk");
-          navigate("/");
-        } else {
-          toast.warning(res.data.message);
+          Storage.setLogin(res.data.result.token);
+
+          navigate("/dashboard");
         }
       })
       .catch((error) => {

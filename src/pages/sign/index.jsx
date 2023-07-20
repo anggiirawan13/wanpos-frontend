@@ -16,6 +16,7 @@ export default function Signup() {
     email: "",
     alamat: "",
     password: "",
+    role: "client",
   });
 
   const navigate = useNavigate();
