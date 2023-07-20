@@ -11,7 +11,7 @@ export default function axiosInterceptors() {
     (err) => {
       localStorage.clear();
 
-      window.location = "/login";
+      window.location.href = "/login";
     }
   );
 
@@ -22,7 +22,7 @@ export default function axiosInterceptors() {
     (err) => {
       localStorage.clear();
 
-      window.location = "/login";
+      window.location.href = "/login";
     }
   );
 }

@@ -1,35 +1,27 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route, useLocation } from "react-router-dom";
-
 import "./css/style.css";
-
 import "./charts/ChartjsConfig";
-
-// Import pages
 import Dashboard from "./pages/Dashboard";
 import InformasiPerusahaan from "./pages/informasiPerusahaan/index";
 import EditPerusahaan from "./pages/informasiPerusahaan/edit";
-
 import Product from "./pages/product/index";
 import EditProduct from "./pages/product/edit";
-import CreateProduct from "./pages/product/create";
-
-// Client
-import DaftarMenu from "../src/pagesClients/index-v1";
-import Sukses from "../src/pagesClients/Hasil/sukses";
+import DaftarMenu from "./pagesClients/index-v1";
 import Signup from "./pages/sign/index.jsx";
 import SignupAdmin from "./pages/Sign/sign-up-admin.jsx";
 import Login from "./pages/login_user/index.jsx";
 import LoginAdmin from "./pages/login_admin/index.jsx";
 import Pesanan from "./pages/../pagesClients/Hasil/Pesanan.jsx";
-import ClientPage from "../src/pagesClients/index.jsx";
-import AddProduk from "../src/pages/product/create.jsx";
-import Konfirmasi from "../src/pagesClients/Hasil/konfirmasi.jsx";
+import ClientPage from "./pagesClients/index.jsx";
+import TambahProduk from "./pages/product/create.jsx";
+import Konfirmasi from "./pagesClients/Hasil/konfirmasi.jsx";
 import PesananBaru from "./pages/pesanan/pesananBaru.jsx";
 import PesananProses from "./pages/pesanan/pesananProses.jsx";
 import PesananSelesai from "./pages/pesanan/PesananSelesai.jsx";
-import axiosInterceptors from "./plugins/axiosInterceptors";
+import axiosInterceptors from "./plugins/axiosInterceptors.js";
+import SecuredRoute from "./plugins/SecuredRoute";
 
 function App() {
   const location = useLocation();
@@ -45,31 +37,102 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<ClientPage />} />
-        <Route exact path="/dashboard" element={<Dashboard />} />
-        <Route exact path="/listCompany" element={<InformasiPerusahaan />} />
-        <Route exact path="/company/:id_company" element={<EditPerusahaan />} />
-        <Route exact path="/product-page" element={<Product />} />
-        <Route
-          exact
-          path="/edit-product/:id_product"
-          element={<EditProduct />}
-        />
-        <Route exact path="/create-product" element={<CreateProduct />} />
-        <Route exact path="/signup" element={<Signup />} />
-        <Route exact path="/signup-admin" element={<SignupAdmin />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/login-admin" element={<LoginAdmin />} />
-        <Route exact path="/tambah-produk" element={<AddProduk />} />
-        <Route exact path="/konfirmasi" element={<Konfirmasi />} />
-        <Route exact path="/pesanan/baru" element={<PesananBaru />} />
-        <Route exact path="/pesanan/proses" element={<PesananProses />} />
-        <Route exact path="/pesanan/selesai" element={<PesananSelesai />} />
+        <Fragment>
+          {/* ROUTE ALL ROLE */}
+          <Route
+            exact
+            path="/signup"
+            element={<SecuredRoute role="" element={<Signup />} />}
+          />
+          <Route
+            exact
+            path="/signup-admin"
+            element={<SecuredRoute role="" element={<SignupAdmin />} />}
+          />
+          <Route
+            exact
+            path="/login"
+            element={<SecuredRoute role="" element={<Login />} />}
+          />
+          <Route
+            exact
+            path="/login-admin"
+            element={<SecuredRoute role="" element={<LoginAdmin />} />}
+          />
 
-        {/* Routing Client */}
-        <Route exact path="/roti-sobek" element={<DaftarMenu />} />
-        <Route exact path="/checkout" element={<Pesanan />} />
-        <Route exact path="/berhasil" element={<Sukses />} />
+          {/* ROUTE ADMIN ROLE */}
+          <Route
+            exact
+            path="/listCompany"
+            element={
+              <SecuredRoute role="admin" element={<InformasiPerusahaan />} />
+            }
+          />
+          <Route
+            exact
+            path="/company/:id_company"
+            element={<SecuredRoute role="admin" element={<EditPerusahaan />} />}
+          />
+          <Route
+            exact
+            path="/product-page"
+            element={<SecuredRoute role="admin" element={<Product />} />}
+          />
+          <Route
+            exact
+            path="/edit-product/:id_product"
+            element={<SecuredRoute role="admin" element={<EditProduct />} />}
+          />
+          <Route
+            exact
+            path="/tambah-produk"
+            element={<SecuredRoute role="admin" element={<TambahProduk />} />}
+          />
+          <Route
+            exact
+            path="/pesanan/baru"
+            element={<SecuredRoute role="admin" element={<PesananBaru />} />}
+          />
+          <Route
+            exact
+            path="/pesanan/proses"
+            element={<SecuredRoute role="admin" element={<PesananProses />} />}
+          />
+          <Route
+            exact
+            path="/pesanan/selesai"
+            element={<SecuredRoute role="admin" element={<PesananSelesai />} />}
+          />
+
+          {/* ROUTE CLIENT ROLE */}
+          <Route
+            exact
+            path="/"
+            element={<SecuredRoute role="client" element={<ClientPage />} />}
+          />
+          <Route
+            exact
+            path="/dashboard"
+            element={<SecuredRoute role="client" element={<Dashboard />} />}
+          />
+
+          <Route
+            exact
+            path="/konfirmasi"
+            element={<SecuredRoute role="client" element={<Konfirmasi />} />}
+          />
+
+          <Route
+            exact
+            path="/roti-sobek"
+            element={<SecuredRoute role="client" element={<DaftarMenu />} />}
+          />
+          <Route
+            exact
+            path="/checkout"
+            element={<SecuredRoute role="client" element={<Pesanan />} />}
+          />
+        </Fragment>
       </Routes>
     </>
   );
