@@ -43,24 +43,36 @@ function App() {
           <Route
             exact
             path="/signup"
-            element={<SecuredRoute role="" element={<Signup />} />}
+            element={
+              <SecuredRoute withLogin={true} role="" element={<Signup />} />
+            }
           />
           <Route
             exact
             path="/login"
-            element={<SecuredRoute role="" element={<Login />} />}
+            element={
+              <SecuredRoute withLogin={true} role="" element={<Login />} />
+            }
           />
           <Route
             exact
             path="/logout"
-            element={<SecuredRoute role="" element={<Logout />} />}
+            element={
+              <SecuredRoute withLogin={true} role="" element={<Logout />} />
+            }
           />
 
           {/* ROUTE ADMIN ROLE */}
           <Route
             exact
             path="/dashboard"
-            element={<SecuredRoute role={ADMIN_ROLE} element={<Dashboard />} />}
+            element={
+              <SecuredRoute
+                withLogin={true}
+                role={ADMIN_ROLE}
+                element={<Dashboard />}
+              />
+            }
           />
           <Route
             exact
@@ -76,47 +88,77 @@ function App() {
             exact
             path="/company/:id_company"
             element={
-              <SecuredRoute role={ADMIN_ROLE} element={<EditPerusahaan />} />
+              <SecuredRoute
+                withLogin={true}
+                role={ADMIN_ROLE}
+                element={<EditPerusahaan />}
+              />
             }
           />
           <Route
             exact
             path="/product"
-            element={<SecuredRoute role={ADMIN_ROLE} element={<Product />} />}
+            element={
+              <SecuredRoute
+                withLogin={true}
+                role={ADMIN_ROLE}
+                element={<Product />}
+              />
+            }
           />
           <Route
             exact
             path="/product/:id_product"
             element={
-              <SecuredRoute role={ADMIN_ROLE} element={<EditProduct />} />
+              <SecuredRoute
+                withLogin={true}
+                role={ADMIN_ROLE}
+                element={<EditProduct />}
+              />
             }
           />
           <Route
             exact
             path="/product/add"
             element={
-              <SecuredRoute role={ADMIN_ROLE} element={<AddProduct />} />
+              <SecuredRoute
+                withLogin={true}
+                role={ADMIN_ROLE}
+                element={<AddProduct />}
+              />
             }
           />
           <Route
             exact
             path="/pesanan/baru"
             element={
-              <SecuredRoute role={ADMIN_ROLE} element={<PesananBaru />} />
+              <SecuredRoute
+                withLogin={true}
+                role={ADMIN_ROLE}
+                element={<PesananBaru />}
+              />
             }
           />
           <Route
             exact
             path="/pesanan/proses"
             element={
-              <SecuredRoute role={ADMIN_ROLE} element={<PesananProses />} />
+              <SecuredRoute
+                withLogin={true}
+                role={ADMIN_ROLE}
+                element={<PesananProses />}
+              />
             }
           />
           <Route
             exact
             path="/pesanan/selesai"
             element={
-              <SecuredRoute role={ADMIN_ROLE} element={<PesananSelesai />} />
+              <SecuredRoute
+                withLogin={true}
+                role={ADMIN_ROLE}
+                element={<PesananSelesai />}
+              />
             }
           />
 
@@ -125,14 +167,22 @@ function App() {
             exact
             path="/"
             element={
-              <SecuredRoute role={CLIENT_ROLE} element={<ClientPage />} />
+              <SecuredRoute
+                withLogin={false}
+                role={CLIENT_ROLE}
+                element={<ClientPage />}
+              />
             }
           />
           <Route
             exact
             path="/konfirmasi"
             element={
-              <SecuredRoute role={CLIENT_ROLE} element={<Konfirmasi />} />
+              <SecuredRoute
+                withLogin={true}
+                role={CLIENT_ROLE}
+                element={<Konfirmasi />}
+              />
             }
           />
 
@@ -140,13 +190,23 @@ function App() {
             exact
             path="/roti-sobek"
             element={
-              <SecuredRoute role={CLIENT_ROLE} element={<DaftarMenu />} />
+              <SecuredRoute
+                withLogin={true}
+                role={CLIENT_ROLE}
+                element={<DaftarMenu />}
+              />
             }
           />
           <Route
             exact
             path="/checkout"
-            element={<SecuredRoute role={CLIENT_ROLE} element={<Pesanan />} />}
+            element={
+              <SecuredRoute
+                withLogin={true}
+                role={CLIENT_ROLE}
+                element={<Pesanan />}
+              />
+            }
           />
         </Fragment>
       </Routes>

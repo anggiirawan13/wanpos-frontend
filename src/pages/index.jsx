@@ -18,7 +18,7 @@ export default class DaftarMenu extends Component {
 
   componentDidMount() {
     axios
-      .get(`api/v1/product`)
+      .get(`api/v1/product/noauth`)
       .then((res) => {
         const menus = res.data.result;
         this.setState({ menus });
@@ -29,7 +29,7 @@ export default class DaftarMenu extends Component {
   }
 
   render() {
-    const { menus, keranjangs } = this.state;
+    const { menus } = this.state;
     return (
       <>
         <Navbar />
