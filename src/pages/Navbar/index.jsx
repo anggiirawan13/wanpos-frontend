@@ -8,21 +8,31 @@ import axios from "axios";
 
 function ColorSchemesExample() {
   useEffect(() => {
-    fetchPesanan();
+    fetchPesananKonfirmasi();
+    // fetchPesananProses();
     const auth = Storage.getLogin() ? true : false;
     setBtnLogout(auth);
   }, []);
 
   const [order, setOrder] = useState([]);
+  const [proses, setProses] = useState([]);
 
 
-  const fetchPesanan = () => {
+  const fetchPesananKonfirmasi = () => {
 
     axios.get('/api/v1/order/menunggu_konfirmasi').then((res) => {
       setOrder(res.data.result);
     });
 
   }
+
+  // const fetchPesananProses = () => {
+
+  //   axios.get("/api/v1/order/proses").then((response) => {
+  //     setOrder(response.data.result);
+  //   });
+
+  // }
 
   const [btnLogout, setBtnLogout] = useState(false);
 
