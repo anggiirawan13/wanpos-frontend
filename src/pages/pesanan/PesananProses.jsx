@@ -68,8 +68,15 @@ export default function PesananProses() {
                       <th className="p-2">
                         <div className="font-semibold">Nama Lengkap</div>
                       </th>
+
+                      <th className="">
+                        <div className="font-semibold">Pesanan</div>
+                      </th>
                       <th className="p-2">
                         <div className="font-semibold">Total Bayar</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold">Pembayaran</div>
                       </th>
 
                       <th className="p-2">
@@ -92,8 +99,18 @@ export default function PesananProses() {
                             {item.nama_lengkap}
                           </div>
                         </td>
+
+                        <td className="p-2">
+                          <div className="text-emerald-500">Roti Coklat 
+                          , Roti Bakar</div>
+                        </td>
+
                         <td className="p-2">
                           <div>{item.total_bayar}</div>
+                        </td>
+
+                        <td className="p-2">
+                          <div><span className="bg-danger"> Transfer </span></div>
                         </td>
                         <td className="p-2">
                           <Button

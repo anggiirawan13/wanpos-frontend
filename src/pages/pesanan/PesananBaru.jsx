@@ -40,6 +40,7 @@ export default function PesananBaru() {
   };
 
   return (
+
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -62,14 +63,21 @@ export default function PesananBaru() {
                   {/* Table header */}
                   <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                     <tr>
-                      <th className="p-2">
+                      <th className="">
                         <div className="font-semibold">ID Order</div>
                       </th>
                       <th className="p-2">
                         <div className="font-semibold">Nama Lengkap</div>
                       </th>
                       <th className="p-2">
+                        <div className="font-semibold">Pesanan</div>
+                      </th>
+                      <th className="p-2">
                         <div className="font-semibold">Total Bayar</div>
+                      </th>
+
+                      <th className="p-2">
+                        <div className="font-semibold">Pembayaran</div>
                       </th>
 
                       <th className="p-2">
@@ -92,8 +100,18 @@ export default function PesananBaru() {
                             {item.nama_lengkap}
                           </div>
                         </td>
+
+                        <td className="p-2">
+                          <div className="text-emerald-500">
+                          Roti Coklat 
+                          </div>
+                        </td>
                         <td className="p-2">
                           <div>{item.total_bayar}</div>
+                        </td>
+
+                        <td className="p-2">
+                          <div>Ambil Sendiri</div>
                         </td>
                         <td className="p-2">
                           <Button
