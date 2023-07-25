@@ -86,7 +86,6 @@ function CreateProduct() {
                       value={kode}
                       name="kode"
                       onChange={(e) => setKodeProduct(e.target.value)}
-                      placeholder="Enter"
                     />
                   </Form.Group>
 
@@ -97,7 +96,6 @@ function CreateProduct() {
                       value={name_products}
                       name="name_products"
                       onChange={(e) => setNameProduct(e.target.value)}
-                      placeholder="Enter"
                     />
                   </Form.Group>
 
@@ -108,7 +106,6 @@ function CreateProduct() {
                       value={desc_products}
                       name="desc_products"
                       onChange={(e) => setDescProduct(e.target.value)}
-                      placeholder="Enter"
                     />
                   </Form.Group>
 
@@ -119,7 +116,6 @@ function CreateProduct() {
                       value={variant}
                       name="variant"
                       onChange={(e) => setVariantProduct(e.target.value)}
-                      placeholder="Enter"
                     />
                   </Form.Group>
 
@@ -130,7 +126,6 @@ function CreateProduct() {
                       value={harga}
                       name="harga"
                       onChange={(e) => setHarga(e.target.value)}
-                      placeholder="Enter"
                     />
                   </Form.Group>
 
@@ -141,7 +136,6 @@ function CreateProduct() {
                       value={stock}
                       name="stock"
                       onChange={(e) => setStockProduct(e.target.value)}
-                      placeholder="Enter"
                     />
                   </Form.Group>
 

@@ -44,7 +44,7 @@ function App() {
             exact
             path="/signup"
             element={
-              <SecuredRoute withLogin={true} role="" element={<Signup />} />
+              <SecuredRoute withLogin={false} role="" element={<Signup />} />
             }
           />
           <Route
