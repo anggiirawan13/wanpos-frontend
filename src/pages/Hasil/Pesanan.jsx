@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Order from "../Hasil/order.jsx";
 import axios from "axios";
 import Storage from "../../Storage/storage.jsx";
-import { redirect  } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 export default class Pesanan extends Component {
   constructor(props) {
@@ -75,8 +75,9 @@ export default class Pesanan extends Component {
         title: "Konfirmasi Berhasil!",
         text: "pesanan telah dikonfirmasi",
         icon: "success",
+      }).then(() => {
+        history.back();
       });
-      this.props.history.push('/roti-sobek')
     });
   };
 
