@@ -21,9 +21,9 @@ export default function PesananBaru() {
     });
   };
 
-  const doProsesOrder = (idOrder) => {
+  const doProsesOrder = (orderCode) => {
     axios
-      .put(`/api/v1/order/${idOrder}/proses`)
+      .put(`/api/v1/order/${orderCode}/proses`)
       .then(() => {
         swal({
           title: "Order Di Proses!",
@@ -40,7 +40,6 @@ export default function PesananBaru() {
   };
 
   return (
-
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -64,7 +63,7 @@ export default function PesananBaru() {
                   <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                     <tr>
                       <th className="">
-                        <div className="font-semibold">ID Order</div>
+                        <div className="font-semibold">Kode Order</div>
                       </th>
                       <th className="p-2">
                         <div className="font-semibold">Nama Lengkap</div>
@@ -93,7 +92,7 @@ export default function PesananBaru() {
                     {order.map((item, index) => (
                       <tr key={index}>
                         <td className="p-2">
-                          <div>{item.id_order}</div>
+                          <div>{item.order_code}</div>
                         </td>
                         <td className="p-2">
                           <div className="text-emerald-500">
@@ -103,7 +102,7 @@ export default function PesananBaru() {
 
                         <td className="p-2">
                           <div className="text-emerald-500">
-                          Roti Coklat 
+                            {item.products}
                           </div>
                         </td>
                         <td className="p-2">
@@ -111,13 +110,13 @@ export default function PesananBaru() {
                         </td>
 
                         <td className="p-2">
-                          <div>Ambil Sendiri</div>
+                          <div>{item.metode_pemesanan}</div>
                         </td>
                         <td className="p-2">
                           <Button
                             type="input"
                             variant="primary"
-                            onClick={() => doProsesOrder(item.id_order)}
+                            onClick={() => doProsesOrder(item.order_code)}
                           >
                             Proses
                           </Button>

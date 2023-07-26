@@ -165,15 +165,18 @@ export default class Pesanan extends Component {
                     />
                   </Form.Group>
 
+                  <Form.Label>Metode Pembayaran</Form.Label>
                   <Form.Select
                     aria-label="Default select example"
                     onChange={(e) =>
                       this.setState({ metode_pemesanan: e.target.value })
                     }
                   >
-                    <option>Metode Pembayaran</option>
-                    <option value="1">BCA Virtual account</option>
-                    <option value="2">Di ambil Sendiri</option>
+                    <option hidden>- Pilih Metode Pembayaran -</option>
+                    <option value="BCA Virtual Account">
+                      BCA Virtual Account
+                    </option>
+                    <option value="Ambil Sendiri">Ambil Sendiri</option>
                   </Form.Select>
                   <Button
                     variant="primary"

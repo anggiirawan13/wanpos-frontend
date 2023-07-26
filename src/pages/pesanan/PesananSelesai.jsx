@@ -43,13 +43,19 @@ export default function PesananSelesai() {
                   <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                     <tr>
                       <th className="p-2">
-                        <div className="font-semibold">ID Order</div>
+                        <div className="font-semibold">Kode Order</div>
                       </th>
                       <th className="p-2">
                         <div className="font-semibold">Nama Lengkap</div>
                       </th>
+                      <th className="">
+                        <div className="font-semibold">Pesanan</div>
+                      </th>
                       <th className="p-2">
                         <div className="font-semibold">Total Bayar</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold">Pembayaran</div>
                       </th>
                     </tr>
                   </thead>
@@ -61,15 +67,26 @@ export default function PesananSelesai() {
                     {order.map((item, index) => (
                       <tr key={index}>
                         <td className="p-2">
-                          <div>{item.id_order}</div>
+                          <div>{item.order_code}</div>
                         </td>
                         <td className="p-2">
                           <div className="text-emerald-500">
                             {item.nama_lengkap}
                           </div>
                         </td>
+
+                        <td className="p-2">
+                          <div className="text-emerald-500">
+                            {item.products}
+                          </div>
+                        </td>
+
                         <td className="p-2">
                           <div>{item.total_bayar}</div>
+                        </td>
+
+                        <td className="p-2">
+                          <div>{item.metode_pemesanan}</div>
                         </td>
                       </tr>
                     ))}
