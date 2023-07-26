@@ -110,7 +110,6 @@ export default class DaftarMenu extends Component {
             <Col>
               <h2 className="font-semibold mt-3 text-slate-900 mb-3 dark:text-slate-100">
                 <strong>Daftar Menu</strong>
-
                 <hr />
               </h2>
               <Row>

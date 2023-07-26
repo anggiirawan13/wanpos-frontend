@@ -5,6 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Storage from "../../Storage/storage";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import axios from "axios";
+import { Col, Form, Row } from "react-bootstrap";
 
 function ColorSchemesExample() {
   useEffect(() => {
@@ -41,8 +42,20 @@ function ColorSchemesExample() {
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action5">Lihat Semua</NavDropdown.Item>
             </NavDropdown>
-            {btnLogout ? <Nav.Link href="/logout">Logout</Nav.Link> : <></>}
           </Nav>
+          <Form inline>
+            <Row>
+              <Col xs="auto">
+                {btnLogout ? (
+                  <Nav.Link href="/logout" className="text-white">
+                    Logout
+                  </Nav.Link>
+                ) : (
+                  <></>
+                )}
+              </Col>
+            </Row>
+          </Form>
         </Container>
       </Navbar>
     </>

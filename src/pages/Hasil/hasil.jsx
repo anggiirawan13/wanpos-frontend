@@ -110,8 +110,8 @@ export default class hasil extends Component {
       <Col md={3} mt={"2"}>
         <h2 className="font-semibold mt-3 text-slate-900 mb-3 dark:text-slate-100">
           <strong>Hasil</strong>
+          <hr />
         </h2>
-        <hr />
         {keranjangs.length !== 0 && (
           <ListGroup variant="flush">
             {keranjangs.map((menuKerajang) => (
