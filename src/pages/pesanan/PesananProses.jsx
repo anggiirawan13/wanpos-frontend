@@ -109,11 +109,7 @@ export default function PesananProses() {
                         </td>
 
                         <td className="p-2">
-                          <div>
-                            <span className="bg-danger text-white">
-                              {item.metode_pemesanan}
-                            </span>
-                          </div>
+                          <div>{item.metode_pemesanan}</div>
                         </td>
                         <td className="p-2">
                           <Button

@@ -110,7 +110,7 @@ export default function PesananBaru() {
                         </td>
 
                         <td className="p-2">
-                          <div>Ambil Sendiri</div>
+                          <div>{item.metode_pemesanan}</div>
                         </td>
                         <td className="p-2">
                           <Button
