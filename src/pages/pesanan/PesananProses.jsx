@@ -63,12 +63,11 @@ export default function PesananProses() {
                   <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                     <tr>
                       <th className="p-2">
-                        <div className="font-semibold">ID Order</div>
+                        <div className="font-semibold">Kode Order</div>
                       </th>
                       <th className="p-2">
                         <div className="font-semibold">Nama Lengkap</div>
                       </th>
-
                       <th className="">
                         <div className="font-semibold">Pesanan</div>
                       </th>
@@ -78,7 +77,6 @@ export default function PesananProses() {
                       <th className="p-2">
                         <div className="font-semibold">Pembayaran</div>
                       </th>
-
                       <th className="p-2">
                         <div className="font-semibold">Action</div>
                       </th>
@@ -92,7 +90,7 @@ export default function PesananProses() {
                     {order.map((item, index) => (
                       <tr key={index}>
                         <td className="p-2">
-                          <div>{item.id_order}</div>
+                          <div>{item.order_code}</div>
                         </td>
                         <td className="p-2">
                           <div className="text-emerald-500">
@@ -101,8 +99,9 @@ export default function PesananProses() {
                         </td>
 
                         <td className="p-2">
-                          <div className="text-emerald-500">Roti Coklat 
-                          , Roti Bakar</div>
+                          <div className="text-emerald-500">
+                            {item.products}
+                          </div>
                         </td>
 
                         <td className="p-2">
@@ -110,13 +109,17 @@ export default function PesananProses() {
                         </td>
 
                         <td className="p-2">
-                          <div><span className="bg-danger"> Transfer </span></div>
+                          <div>
+                            <span className="bg-danger text-white">
+                              {item.metode_pemesanan}
+                            </span>
+                          </div>
                         </td>
                         <td className="p-2">
                           <Button
                             type="input"
                             variant="primary"
-                            onClick={() => doSelesaiOrder(item.id_order)}
+                            onClick={() => doSelesaiOrder(item.order_code)}
                           >
                             Selesai
                           </Button>
