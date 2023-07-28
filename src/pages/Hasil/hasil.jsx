@@ -32,10 +32,22 @@ export default class hasil extends Component {
   };
 
   tambah = () => {
-    this.setState({
-      jumlah: this.state.jumlah + 1,
-      totalHarga: this.state.keranjangdetail.harga * (this.state.jumlah + 1),
-    });
+
+    console.log("jumlah", this.state.keranjangdetail.stock);
+    if ( this.state.jumlah < this.state.keranjangdetail.stock ) {
+      this.setState({
+        jumlah: this.state.jumlah + 1,
+        totalHarga: this.state.keranjangdetail.harga * (this.state.jumlah + 1),
+      });
+    } else {
+
+      swal({
+        title: "Jumlah Melebihi batas stock!",
+        timer: 1500,
+      });
+    }
+    
+   
   };
 
   kurang = () => {

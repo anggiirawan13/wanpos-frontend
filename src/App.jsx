@@ -37,10 +37,11 @@ function App() {
 
   return (
     <>
-      <Routes>
+      <Routes >
         <Fragment>
           {/* ROUTE ALL ROLE */}
           <Route
+          
             exact
             path="/signup"
             element={

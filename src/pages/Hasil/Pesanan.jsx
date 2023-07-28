@@ -76,7 +76,7 @@ export default class Pesanan extends Component {
         text: "pesanan telah dikonfirmasi",
         icon: "success",
       }).then(() => {
-        history.back();
+        history.pushState(null,null, "/konfirmasi");
       });
     });
   };
@@ -137,46 +137,15 @@ export default class Pesanan extends Component {
                     />
                   </Form.Group>
 
-                  <Form.Group
-                    className="mb-3"
-                    controlId="exampleForm.ControlInput1"
-                  >
-                    <Form.Label>Nama Rekening</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="nama_rekening"
-                      onChange={(e) =>
-                        this.setState({ nama_rekening: e.target.value })
-                      }
-                    />
-                  </Form.Group>
-
-                  <Form.Group
-                    className="mb-3"
-                    controlId="exampleForm.ControlInput1"
-                  >
-                    <Form.Label>No Rekening</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="no_rek"
-                      onChange={(e) =>
-                        this.setState({ no_rek: e.target.value })
-                      }
-                    />
-                  </Form.Group>
-
-                  <Form.Label>Metode Pembayaran</Form.Label>
                   <Form.Select
                     aria-label="Default select example"
                     onChange={(e) =>
                       this.setState({ metode_pemesanan: e.target.value })
                     }
                   >
-                    <option hidden>- Pilih Metode Pembayaran -</option>
-                    <option value="BCA Virtual Account">
-                      BCA Virtual Account
-                    </option>
-                    <option value="Ambil Sendiri">Ambil Sendiri</option>
+                    <option>Metode Pembayaran</option>
+                    <option value="1">Transfer Bank</option>
+                    <option value="2">Di ambil Sendiri</option>
                   </Form.Select>
                   <Button
                     variant="primary"
