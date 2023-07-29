@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function numberWithComas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : x;
 }
 
 const modalKeranjang = ({

@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card";
 import { API_URL } from "../../../env.json";
 
 function numberWithComas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : x;
 }
 
 const menu = ({ menus, masukKeranjang }) => {
@@ -22,7 +22,7 @@ const menu = ({ menus, masukKeranjang }) => {
             {menus.desc_products}
           </span>
           <Card.Text>
-            <>Rp. {numberWithComas(menus.harga)}</>
+            <>Rp. {menus.harga ? numberWithComas(menus.harga) : 0}</>
           </Card.Text>
           <Card.Text>
             <span className="dark:text-indigo-200 mb-2">

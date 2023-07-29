@@ -55,7 +55,6 @@ function EditProduct() {
       formData.append("harga", harga);
       formData.append("stock", stock);
       formData.append("file", file);
-      console.log(file);
 
       axios.put(`/api/v1/product/${id_product}`, formData).then(() => {
         swal({

@@ -6,7 +6,7 @@ import TotalBayar from "./totalBayar";
 import axios from "axios";
 
 function numberWithComas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : x;
 }
 
 export default class hasil extends Component {
@@ -32,22 +32,17 @@ export default class hasil extends Component {
   };
 
   tambah = () => {
-
-    console.log("jumlah", this.state.keranjangdetail.stock);
-    if ( this.state.jumlah < this.state.keranjangdetail.stock ) {
+    if (this.state.jumlah < this.state.keranjangdetail.stock) {
       this.setState({
         jumlah: this.state.jumlah + 1,
         totalHarga: this.state.keranjangdetail.harga * (this.state.jumlah + 1),
       });
     } else {
-
       swal({
         title: "Jumlah Melebihi batas stock!",
         timer: 1500,
       });
     }
-    
-   
   };
 
   kurang = () => {
@@ -124,56 +119,60 @@ export default class hasil extends Component {
           <strong>Hasil</strong>
           <hr />
         </h2>
-        {keranjangs.length !== 0 && (
-          <ListGroup variant="flush">
-            {keranjangs.map((menuKerajang) => (
-              <ListGroup.Item
-                key={menuKerajang.id_checkout}
-                onClick={() => this.handleShow(menuKerajang)}
-              >
-                <Row>
-                  <Col xl="2">
-                    <h2 className="font-semibold mt-3 text-slate-900 mb-3 dark:text-slate-100">
-                      <Badge pill variant="success">
+        {keranjangs ? (
+          keranjangs.length !== 0 && (
+            <ListGroup variant="flush">
+              {keranjangs.map((menuKerajang) => (
+                <ListGroup.Item
+                  key={menuKerajang.id_checkout}
+                  onClick={() => this.handleShow(menuKerajang)}
+                >
+                  <Row>
+                    <Col xl="2">
+                      <h2 className="font-semibold mt-3 text-slate-900 mb-3 dark:text-slate-100">
+                        <Badge pill variant="success">
+                          {menuKerajang.jumlah}
+                        </Badge>
+                      </h2>
+                    </Col>
+                    <Col>
+                      <h5 className="dark:text-indigo-200 mb-2">
+                        {menuKerajang.name_products}
+                      </h5>
+                      <span
+                        className="dark:text-indigo-200 mb-2"
+                        style={{ fontSize: "12px" }}
+                      >
+                        Rp. {numberWithComas(menuKerajang.harga)} x{" "}
                         {menuKerajang.jumlah}
-                      </Badge>
-                    </h2>
-                  </Col>
-                  <Col>
-                    <h5 className="dark:text-indigo-200 mb-2">
-                      {menuKerajang.name_products}
-                    </h5>
-                    <span
-                      className="dark:text-indigo-200 mb-2"
-                      style={{ fontSize: "12px" }}
-                    >
-                      Rp. {numberWithComas(menuKerajang.harga)} x{" "}
-                      {menuKerajang.jumlah}
-                    </span>
-                  </Col>
-                  <Col>
-                    <span
-                      className="dark:text-indigo-200 mb-2"
-                      style={{ fontSize: "14px" }}
-                    >
-                      <strong className="float-right">
-                        Rp. {numberWithComas(menuKerajang.total_harga)}
-                      </strong>
-                    </span>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-            ))}
+                      </span>
+                    </Col>
+                    <Col>
+                      <span
+                        className="dark:text-indigo-200 mb-2"
+                        style={{ fontSize: "14px" }}
+                      >
+                        <strong className="float-right">
+                          Rp. {numberWithComas(menuKerajang.total_harga)}
+                        </strong>
+                      </span>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              ))}
 
-            <ModalKeranjang
-              {...this.state}
-              handleClose={() => this.handleClose()}
-              handleSubmit={(e) => this.handleSubmit(e, { ...this.state })}
-              handleDelete={(e) => this.handleDelete(e, { ...this.state })}
-              tambah={() => this.tambah()}
-              kurang={() => this.kurang()}
-            />
-          </ListGroup>
+              <ModalKeranjang
+                {...this.state}
+                handleClose={() => this.handleClose()}
+                handleSubmit={(e) => this.handleSubmit(e, { ...this.state })}
+                handleDelete={(e) => this.handleDelete(e, { ...this.state })}
+                tambah={() => this.tambah()}
+                kurang={() => this.kurang()}
+              />
+            </ListGroup>
+          )
+        ) : (
+          <></>
         )}
         <TotalBayar keranjangs={keranjangs} />
       </Col>

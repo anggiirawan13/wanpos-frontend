@@ -16,22 +16,19 @@ export default class Konfirmasi extends Component {
     };
   }
 
-  componentDidMount()
-  {
+  componentDidMount() {
     axios.get("/api/v1/order/menunggu_konfirmasi").then((response) => {
       const order = response.data.result;
-      console.log("harga", order);
       this.setState({
-        order
-      })
+        order,
+      });
     });
   }
 
-
   render() {
-    const { order, total_bayar } = this.state;
-    let bayar = order.map((item, i) => ( item.total_bayar ));
-    console.log("bayaar", bayar);
+    const { order } = this.state;
+    let bayar = 0;
+    order ? order.map((item) => (bayar += item.total_bayar)) : 0;
     return (
       <>
         <h2
@@ -45,13 +42,11 @@ export default class Konfirmasi extends Component {
           className="font-semibold text-center text-slate-900 mb-3 dark:text-slate-100"
           style={{ marginTop: "10px" }}
         >
-         Bank Central Asia ( BCA )<br></br>
-         No. Rek 876-092229 <br />
-         a.n ROTI SOBEK <br></br>
-
-         Total Tagihan : Rp.  {bayar}
+          Bank Central Asia ( BCA )<br></br>
+          No. Rek 876-092229 <br />
+          a.n ROTI SOBEK <br></br>
+          Total Tagihan : Rp. {bayar}
         </h2>
-        
 
         <h2
           className="font-semibold text-center text-slate-900 mb-3 dark:text-slate-100"
@@ -59,15 +54,22 @@ export default class Konfirmasi extends Component {
         >
           Lakukan Konfirmasi Pembayaran kepada Admin Roti Sobek di bawah ini.
           dengan cara : <br />
-          1. Upload Bukti Transfer ( Jika Metode yang digunakan Transfer ) dan Konfirmasi Kode Pesanan Beserta Bukti Transfer anda Kepada Admin Roti Sobek
+          1. Upload Bukti Transfer ( Jika Metode yang digunakan Transfer ) dan
+          Konfirmasi Kode Pesanan Beserta Bukti Transfer anda Kepada Admin Roti
+          Sobek
         </h2>
         <Container>
-          { order.map((item, i) => (
-
-            <Card>
-            <Card.Body className="text-center">KODE PESANAN ANDA [ {item.order_code} ] </Card.Body>
-          </Card>
-            ))}
+          {order ? (
+            order.map((item, i) => (
+              <Card key={i}>
+                <Card.Body className="text-center">
+                  KODE PESANAN ANDA [ {item.order_code} ]{" "}
+                </Card.Body>
+              </Card>
+            ))
+          ) : (
+            <></>
+          )}
         </Container>
 
         <Link

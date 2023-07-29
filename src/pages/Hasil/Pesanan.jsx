@@ -76,7 +76,7 @@ export default class Pesanan extends Component {
         text: "pesanan telah dikonfirmasi",
         icon: "success",
       }).then(() => {
-        history.pushState(null,null, "/konfirmasi");
+        window.location.href = "/konfirmasi";
       });
     });
   };

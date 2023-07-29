@@ -50,7 +50,7 @@ function Dashboard() {
       .then((res) => {
         if (res.data.error === false) {
           toast.success("Berhasil Menambahkan Data Perusahaan");
-          navigate("/listCompany");
+          navigate("/company");
         } else {
           toast.warning("Berhasil");
         }

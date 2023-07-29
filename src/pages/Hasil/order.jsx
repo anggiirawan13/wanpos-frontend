@@ -4,7 +4,7 @@ import { ListGroup } from "react-bootstrap";
 import ModalKeranjang from "./ModalKeranjang";
 
 function numberWithComas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : x;
 }
 
 export default class hasil extends Component {
@@ -57,8 +57,11 @@ export default class hasil extends Component {
                       className="dark:text-indigo-200 mb-2"
                       style={{ fontSize: "12px" }}
                     >
-                      Rp. {numberWithComas(menuKerajang.harga)} x{" "}
-                      {menuKerajang.jumlah}
+                      Rp.{" "}
+                      {menuKerajang.harga
+                        ? numberWithComas(menuKerajang.harga)
+                        : 0}{" "}
+                      x {menuKerajang.jumlah}
                     </span>
                   </Col>
                   <Col>
@@ -67,7 +70,10 @@ export default class hasil extends Component {
                       style={{ fontSize: "14px" }}
                     >
                       <strong className="float-right">
-                        Rp. {numberWithComas(menuKerajang.total_harga)}
+                        Rp.{" "}
+                        {menuKerajang.total_harga
+                          ? numberWithComas(menuKerajang.total_harga)
+                          : 0}
                       </strong>
                     </span>
                   </Col>

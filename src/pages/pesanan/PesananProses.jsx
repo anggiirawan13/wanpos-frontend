@@ -87,41 +87,45 @@ export default function PesananProses() {
                   <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                     {/* Row */}
 
-                    {order.map((item, index) => (
-                      <tr key={index}>
-                        <td className="p-2">
-                          <div>{item.order_code}</div>
-                        </td>
-                        <td className="p-2">
-                          <div className="text-emerald-500">
-                            {item.nama_lengkap}
-                          </div>
-                        </td>
+                    {order ? (
+                      order.map((item, index) => (
+                        <tr key={index}>
+                          <td className="p-2">
+                            <div>{item.order_code}</div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-emerald-500">
+                              {item.nama_lengkap}
+                            </div>
+                          </td>
 
-                        <td className="p-2">
-                          <div className="text-emerald-500">
-                            {item.products}
-                          </div>
-                        </td>
+                          <td className="p-2">
+                            <div className="text-emerald-500">
+                              {item.products}
+                            </div>
+                          </td>
 
-                        <td className="p-2">
-                          <div>{item.total_bayar}</div>
-                        </td>
+                          <td className="p-2">
+                            <div>{item.total_bayar}</div>
+                          </td>
 
-                        <td className="p-2">
-                          <div>{item.metode_pemesanan}</div>
-                        </td>
-                        <td className="p-2">
-                          <Button
-                            type="input"
-                            variant="primary"
-                            onClick={() => doSelesaiOrder(item.order_code)}
-                          >
-                            Selesai
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
+                          <td className="p-2">
+                            <div>{item.metode_pemesanan}</div>
+                          </td>
+                          <td className="p-2">
+                            <Button
+                              type="input"
+                              variant="primary"
+                              onClick={() => doSelesaiOrder(item.order_code)}
+                            >
+                              Selesai
+                            </Button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <></>
+                    )}
                   </tbody>
                 </table>
               </div>

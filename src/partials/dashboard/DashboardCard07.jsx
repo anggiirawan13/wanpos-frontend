@@ -47,28 +47,32 @@ function DashboardCard07() {
             {/* Table body */}
             <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
               {/* Row */}
-              {top.map((item, index) => (
-                <tr key={index}>
-                  <td className="p-2">
-                    <div className="flex items-center">
-                      <div className="text-slate-800 dark:text-slate-100">
-                        {item.name_products}
+              {top ? (
+                top.map((item, index) => (
+                  <tr key={index}>
+                    <td className="p-2">
+                      <div className="flex items-center">
+                        <div className="text-slate-800 dark:text-slate-100">
+                          {item.name_products}
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
 
-                  <td className="p-2">
-                    <div className="text-center text-emerald-500">
-                      {item.variant}
-                    </div>
-                  </td>
-                  <td className="p-2">
-                    <div className="text-center text-sky-500">
-                      {Math.ceil(item.purchased)}%
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    <td className="p-2">
+                      <div className="text-center text-emerald-500">
+                        {item.variant}
+                      </div>
+                    </td>
+                    <td className="p-2">
+                      <div className="text-center text-sky-500">
+                        {Math.round(item.purchased)}%
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <></>
+              )}
             </tbody>
           </table>
         </div>

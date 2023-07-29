@@ -4,9 +4,7 @@ import Header from "../../partials/Header";
 import Banner from "../../partials/Banner";
 import axios from "axios";
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Button } from "react-bootstrap";
-import swal from "sweetalert";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   useEffect(() => {
@@ -65,29 +63,35 @@ function Dashboard() {
                   <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700 text-center">
                     {/* Row */}
 
-                    {company.map((item, index) => (
-                      <tr key={index}>
-                        <td className="p-2">
-                          <div className="text-center">{item.name_company}</div>
-                        </td>
-                        <td className="p-2">
-                          <div className="text-center text-emerald-500">
-                            {item.desc_company}
-                          </div>
-                        </td>
-                        <td className="p-2">
-                          <div className="text-center">{item.alamat}</div>
-                        </td>
-                        <td className="p-2 text-center">
-                          <Link
-                            to={`/company/${item.id_company}`}
-                            className="btn bg-primary text-white"
-                          >
-                            Ubah
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
+                    {company ? (
+                      company.map((item, index) => (
+                        <tr key={index}>
+                          <td className="p-2">
+                            <div className="text-center">
+                              {item.name_company}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center text-emerald-500">
+                              {item.desc_company}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center">{item.alamat}</div>
+                          </td>
+                          <td className="p-2 text-center">
+                            <Link
+                              to={`/company/${item.id_company}`}
+                              className="btn bg-primary text-white"
+                            >
+                              Ubah
+                            </Link>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <></>
+                    )}
                   </tbody>
                 </table>
               </div>

@@ -34,11 +34,15 @@ function ColorSchemesExample() {
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <NavDropdown title="Pesanan Saya" id="navbarScrollingDropdown">
-              {order.map((item, i) => (
-                <NavDropdown.Item key={i} href="#action4">
-                  Pesanan anda sedang {item.status}
-                </NavDropdown.Item>
-              ))}
+              {order ? (
+                order.map((item, i) => (
+                  <NavDropdown.Item key={i} href="#action4">
+                    Pesanan anda sedang {item.status}
+                  </NavDropdown.Item>
+                ))
+              ) : (
+                <></>
+              )}
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action5">Lihat Semua</NavDropdown.Item>
             </NavDropdown>

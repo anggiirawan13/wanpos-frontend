@@ -38,32 +38,33 @@ export default class DaftarMenu extends Component {
             <Col>
               <h2 className="font-semibold mt-3 text-slate-900 mb-3 dark:text-slate-100">
                 <strong>Daftar Menu</strong>
-
                 <hr />
               </h2>
               <Row>
-                {menus &&
+                {menus ? (
                   menus.map((menu, index) => (
-                    <Col md={4} xs={6} key={index}>
+                    <Col md={4} xs={6} key={index ? index : 0}>
                       <Card className="shadow mb-5">
                         <Card.Img
                           variant="top"
-                          src={`${API_URL}/uploads/${menu.files}`}
+                          src={`${API_URL ? API_URL : ""}/uploads/${
+                            menu.files ? menu.files : ""
+                          }`}
                         />
                         <Card.Body>
                           <Card.Title>
-                            {menu.name_products} - {menu.kode}{" "}
+                            {menu.name_products ? menu.name_products : ""} -{" "}
+                            {menu.kode ? menu.kode : ""}{" "}
                           </Card.Title>
                           <span className="dark:text-indigo-200 mb-2">
-                            {menu.desc_products}
+                            {menu.desc_products ? menu.desc_products : ""}
                           </span>
                           <Card.Text>
-                            <>Rp. {menu.harga}</>
+                            Rp. {menu.harga ? menu.harga : 0}
                           </Card.Text>
                           <Card.Text>
                             <span className="dark:text-indigo-200 mb-2">
-                              {" "}
-                              Stock Tersedia : {menu.stock}
+                              Stock Tersedia : {menu.stock ? menu.stock : 0}
                             </span>
                           </Card.Text>
                           <Link
@@ -76,7 +77,10 @@ export default class DaftarMenu extends Component {
                         </Card.Body>
                       </Card>
                     </Col>
-                  ))}
+                  ))
+                ) : (
+                  <></>
+                )}
               </Row>
             </Col>
           </Row>

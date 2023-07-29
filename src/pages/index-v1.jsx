@@ -50,7 +50,7 @@ export default class DaftarMenu extends Component {
         `/api/v1/checkout/${value.id_products}/${Storage.get("user_id").data}`
       )
       .then((res) => {
-        if (res.data.result.length > 0) {
+        if (res.data.result) {
           const jumlah = res.data.result[0].jumlah + 1;
           const total_harga = res.data.result[0].total_harga + value.harga;
           let id_products = value.id_products;
@@ -85,7 +85,7 @@ export default class DaftarMenu extends Component {
               id_products,
               user_id,
             })
-            .then((res) => {
+            .then(() => {
               this.getListKeranjang();
               swal({
                 title: "Berhasil Menambahkan ke Keranjang!",
@@ -113,14 +113,17 @@ export default class DaftarMenu extends Component {
                 <hr />
               </h2>
               <Row>
-                {menus &&
+                {menus ? (
                   menus.map((menu, index) => (
                     <Menus
                       key={index}
                       menus={menu}
                       masukKeranjang={this.masukKeranjang}
                     />
-                  ))}
+                  ))
+                ) : (
+                  <></>
+                )}
               </Row>
             </Col>
             <Hasil keranjangs={keranjangs} />

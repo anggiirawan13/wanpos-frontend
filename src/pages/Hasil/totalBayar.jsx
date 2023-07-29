@@ -1,18 +1,20 @@
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function numberWithComas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : x;
 }
 
 export default class totalBayar extends Component {
   render() {
-    const totalBayar = this.props.keranjangs.reduce(function (result, item) {
-      return result + parseInt(item.total_harga);
-    }, 0);
+    const totalBayar = this.props.keranjangs
+      ? this.props.keranjangs.reduce((result, item) => {
+          return result + parseInt(item.total_harga);
+        }, 0)
+      : 0;
     return (
       <div className="fixed-bottom">
         <Row>
@@ -20,7 +22,7 @@ export default class totalBayar extends Component {
             <h4 className="text-bold" style={{ marginLeft: "-60px" }}>
               Total bayar:{" "}
               <strong style={{ marginLeft: "70px" }}>
-                Rp. {numberWithComas(totalBayar)}
+                Rp. {totalBayar ? numberWithComas(totalBayar) : 0}
               </strong>
             </h4>
             <Link

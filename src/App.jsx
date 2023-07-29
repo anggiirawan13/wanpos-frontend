@@ -37,11 +37,10 @@ function App() {
 
   return (
     <>
-      <Routes >
+      <Routes>
         <Fragment>
           {/* ROUTE ALL ROLE */}
           <Route
-          
             exact
             path="/signup"
             element={
@@ -80,6 +79,7 @@ function App() {
             path="/company"
             element={
               <SecuredRoute
+                withLogin={true}
                 role={ADMIN_ROLE}
                 element={<InformasiPerusahaan />}
               />
