@@ -19,6 +19,7 @@ export default class hasil extends Component {
       keterangan: "",
       jumlah: 0,
       totalHarga: 0,
+      addQuantity: 0,
     };
   }
 
@@ -36,6 +37,7 @@ export default class hasil extends Component {
       this.setState({
         jumlah: this.state.jumlah + 1,
         totalHarga: this.state.keranjangdetail.harga * (this.state.jumlah + 1),
+        addQuantity: this.state.addQuantity + 1,
       });
     } else {
       swal({
@@ -50,6 +52,7 @@ export default class hasil extends Component {
       this.setState({
         jumlah: this.state.jumlah - 1,
         totalHarga: this.state.keranjangdetail.harga * (this.state.jumlah - 1),
+        addQuantity: this.state.addQuantity - 1,
       });
     }
   };
@@ -61,6 +64,7 @@ export default class hasil extends Component {
         jumlah: menuKeranjang.jumlah,
         total_harga: menuKeranjang.totalHarga,
         id_products: menuKeranjang.keranjangdetail.id_products,
+        addQuantity: menuKeranjang.addQuantity,
       })
       .then(() => {
         swal({
@@ -86,10 +90,11 @@ export default class hasil extends Component {
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
+      console.log(menuKeranjang);
       if (willDelete) {
         axios
           .delete(
-            `api/v1/checkout/${menuKeranjang.keranjangdetail.id_checkout}`
+            `api/v1/checkout/${menuKeranjang.keranjangdetail.id_checkout}/${menuKeranjang.keranjangdetail.id_products}/${menuKeranjang.keranjangdetail.jumlah}`
           )
           .then(() => {
             swal({

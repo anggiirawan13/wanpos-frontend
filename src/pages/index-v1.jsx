@@ -19,6 +19,11 @@ export default class DaftarMenu extends Component {
   }
 
   componentDidMount() {
+    this.getListProduct();
+    this.getListKeranjang();
+  }
+
+  getListProduct = () => {
     axios
       .get(`api/v1/product`)
       .then((res) => {
@@ -28,9 +33,7 @@ export default class DaftarMenu extends Component {
       .catch((error) => {
         console.log(error);
       });
-
-    this.getListKeranjang();
-  }
+  };
 
   getListKeranjang = () => {
     axios
@@ -62,8 +65,10 @@ export default class DaftarMenu extends Component {
               total_harga,
               id_products,
               user_id,
+              addQuantity: 1,
             })
             .then(() => {
+              this.getListProduct();
               this.getListKeranjang();
               swal({
                 title: "Berhasil Menambahkan ke Keranjang!",
@@ -84,8 +89,10 @@ export default class DaftarMenu extends Component {
               total_harga,
               id_products,
               user_id,
+              addQuantity: 1,
             })
             .then(() => {
+              this.getListProduct();
               this.getListKeranjang();
               swal({
                 title: "Berhasil Menambahkan ke Keranjang!",
