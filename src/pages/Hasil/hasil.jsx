@@ -60,7 +60,7 @@ export default class hasil extends Component {
   handleSubmit = (e, menuKeranjang) => {
     e.preventDefault();
     axios
-      .put(`api/v1/checkout/${menuKeranjang.keranjangdetail.id_checkout}`, {
+      .put(`api/checkout/${menuKeranjang.keranjangdetail.id_checkout}`, {
         jumlah: menuKeranjang.jumlah,
         total_harga: menuKeranjang.totalHarga,
         id_products: menuKeranjang.keranjangdetail.id_products,
@@ -94,7 +94,7 @@ export default class hasil extends Component {
       if (willDelete) {
         axios
           .delete(
-            `api/v1/checkout/${menuKeranjang.keranjangdetail.id_checkout}/${menuKeranjang.keranjangdetail.id_products}/${menuKeranjang.keranjangdetail.jumlah}`
+            `api/checkout/${menuKeranjang.keranjangdetail.id_checkout}/${menuKeranjang.keranjangdetail.id_products}/${menuKeranjang.keranjangdetail.jumlah}`
           )
           .then(() => {
             swal({

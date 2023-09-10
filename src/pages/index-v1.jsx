@@ -25,7 +25,7 @@ export default class DaftarMenu extends Component {
 
   getListProduct = () => {
     axios
-      .get(`api/v1/product`)
+      .get(`api/product`)
       .then((res) => {
         const menus = res.data.result;
         this.setState({ menus });
@@ -37,7 +37,7 @@ export default class DaftarMenu extends Component {
 
   getListKeranjang = () => {
     axios
-      .get(`/api/v1/checkout/user/${Storage.get("user_id").data}`)
+      .get(`/api/checkout/user/${Storage.get("user_id").data}`)
       .then((res) => {
         const keranjangs = res.data.result;
         this.setState({ keranjangs });
@@ -49,9 +49,7 @@ export default class DaftarMenu extends Component {
 
   masukKeranjang = (value) => {
     axios
-      .get(
-        `/api/v1/checkout/${value.id_products}/${Storage.get("user_id").data}`
-      )
+      .get(`/api/checkout/${value.id_products}/${Storage.get("user_id").data}`)
       .then((res) => {
         if (res.data.result) {
           const jumlah = res.data.result[0].jumlah + 1;
@@ -60,7 +58,7 @@ export default class DaftarMenu extends Component {
           let user_id = Storage.get("user_id").data;
 
           axios
-            .put(`/api/v1/checkout/${res.data.result[0].id_checkout}`, {
+            .put(`/api/checkout/${res.data.result[0].id_checkout}`, {
               jumlah,
               total_harga,
               id_products,
@@ -84,7 +82,7 @@ export default class DaftarMenu extends Component {
           const user_id = Storage.get("user_id").data;
 
           axios
-            .post("api/v1/checkout", {
+            .post("/api/checkout", {
               jumlah,
               total_harga,
               id_products,

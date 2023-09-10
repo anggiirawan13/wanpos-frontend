@@ -17,26 +17,26 @@ function Product() {
   const [product, setProduct] = useState([]);
 
   const getProduct = () => {
-    axios.get(`api/v1/product`).then((response) => {
+    axios.get("/api/product").then((response) => {
       setProduct(response.data.result);
     });
   };
 
-  const deleteProduct = (id, filename) => {
+  const deleteProduct = (code) => {
     swal({
-      title: "Hapus Produk",
-      text: "apakah kamu yakin ingin menghapus produk ini?",
+      title: "Delete Product",
+      text: "Are you sure to do this action?",
       icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        axios.delete(`api/v1/product/${id}/${filename}`).then(() => {
+        axios.delete(`/api/product/${code}`).then((res) => {
           getProduct();
           swal({
-            title: "Hapus Berhasil",
-            text: "produk berhasil dihapus",
+            title: res.data.messages,
             icon: "success",
+            timer: 1500,
           });
         });
       }
@@ -60,7 +60,7 @@ function Product() {
                 <tr>
                   <th>
                     <h2 className="font-semibold text-slate-900 mb-3 dark:text-slate-100">
-                      Informasi Produk
+                      Data Product
                     </h2>
                   </th>
                   <th className="text-right">
@@ -68,7 +68,7 @@ function Product() {
                       to={"/product/add"}
                       className="btn bg-primary text-white"
                     >
-                      Tambah Produk
+                      Add
                     </Link>
                   </th>
                 </tr>
@@ -82,16 +82,16 @@ function Product() {
                   <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                     <tr>
                       <th className="p-2">
-                        <div className="font-semibold">Nama Product</div>
+                        <div className="font-semibold">Product Code</div>
                       </th>
                       <th className="p-2">
-                        <div className="font-semibold">Harga Product</div>
+                        <div className="font-semibold">Product Name</div>
                       </th>
                       <th className="p-2">
-                        <div className="font-semibold">Stok Product</div>
+                        <div className="font-semibold">Stock</div>
                       </th>
                       <th className="p-2">
-                        <div className="font-semibold">Deskripsi Product</div>
+                        <div className="font-semibold">Selling Price</div>
                       </th>
 
                       <th className="p-2">
@@ -104,48 +104,50 @@ function Product() {
                   <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                     {/* Row */}
 
-                    {product.map((item, index) => (
-                      <tr key={index}>
-                        <td className="p-2">
-                          <div className="text-center">
-                            {item.name_products}
-                          </div>
-                        </td>
-                        <td className="p-2">
-                          <div className="text-center text-emerald-500">
-                            {item.harga}
-                          </div>
-                        </td>
-                        <td className="p-2">
-                          <div className="text-center text-emerald-500">
-                            {item.stock}
-                          </div>
-                        </td>
-                        <td className="p-2">
-                          <div className="text-center">
-                            {item.desc_products}
-                          </div>
-                        </td>
-                        <td className="p-2">
-                          <Button
-                            type="input"
-                            variant="danger"
-                            className="mr-2"
-                            onClick={() =>
-                              deleteProduct(item.id_products, item.files)
-                            }
-                          >
-                            Hapus
-                          </Button>
-                          <Link
-                            to={`/product/${item.id_products}`}
-                            className="btn bg-primary text-white"
-                          >
-                            Ubah
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
+                    {product == null ? (
+                      <></>
+                    ) : (
+                      product.map((item, index) => (
+                        <tr key={index}>
+                          <td className="p-2">
+                            <div className="text-center">
+                              {item.product_code}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center text-emerald-500">
+                              {item.product_name}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center text-emerald-500">
+                              {item.stock}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center">
+                              {item.selling_price}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <Link
+                              to={`/product/${item.product_code}`}
+                              className="btn bg-primary text-white"
+                            >
+                              Edt
+                            </Link>
+                            <Button
+                              type="input"
+                              variant="danger"
+                              className="ml-2"
+                              onClick={() => deleteProduct(item.product_code)}
+                            >
+                              Delete
+                            </Button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>

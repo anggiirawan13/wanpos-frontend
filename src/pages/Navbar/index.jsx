@@ -17,11 +17,9 @@ function ColorSchemesExample() {
   const [order, setOrder] = useState([]);
 
   const getOrder = () => {
-    axios
-      .get(`/api/v1/order/user/${Storage.get("user_id").data}`)
-      .then((res) => {
-        setOrder(res.data.result);
-      });
+    axios.get(`/api/order/user/${Storage.get("user_id").data}`).then((res) => {
+      setOrder(res.data.result);
+    });
   };
 
   const [btnLogout, setBtnLogout] = useState(false);

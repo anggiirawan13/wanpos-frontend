@@ -31,7 +31,7 @@ export default function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post(`api/v1/user`, values).then((res) => {
+    axios.post(`api/user`, values).then((res) => {
       toast.success(res.data.message);
       navigate("/login");
     });

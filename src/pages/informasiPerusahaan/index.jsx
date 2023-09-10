@@ -15,7 +15,7 @@ function Dashboard() {
   const [company, setCompany] = useState([]);
 
   const getCompany = () => {
-    axios.get(`api/v1/company`).then((response) => {
+    axios.get("/api/company").then((response) => {
       setCompany(response.data.result);
     });
   };
@@ -44,13 +44,13 @@ function Dashboard() {
                   <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                     <tr>
                       <th className="p-2">
-                        <div className="font-semibold">Nama Perusahaan</div>
+                        <div className="font-semibold">Company Code</div>
                       </th>
                       <th className="p-2">
-                        <div className="font-semibold">Tentang Perusahaan</div>
+                        <div className="font-semibold">Company Name</div>
                       </th>
                       <th className="p-2">
-                        <div className="font-semibold">Alamat</div>
+                        <div className="font-semibold">Company Address</div>
                       </th>
 
                       <th className="p-2">
@@ -68,23 +68,25 @@ function Dashboard() {
                         <tr key={index}>
                           <td className="p-2">
                             <div className="text-center">
-                              {item.name_company}
+                              {item.company_code}
                             </div>
                           </td>
                           <td className="p-2">
                             <div className="text-center text-emerald-500">
-                              {item.desc_company}
+                              {item.company_name}
                             </div>
                           </td>
                           <td className="p-2">
-                            <div className="text-center">{item.alamat}</div>
+                            <div className="text-center">
+                              {item.company_address}
+                            </div>
                           </td>
                           <td className="p-2 text-center">
                             <Link
-                              to={`/company/${item.id_company}`}
+                              to={`/company/${item.company_code}`}
                               className="btn bg-primary text-white"
                             >
-                              Ubah
+                              Edit
                             </Link>
                           </td>
                         </tr>

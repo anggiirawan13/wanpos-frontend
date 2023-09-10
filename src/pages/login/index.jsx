@@ -10,7 +10,7 @@ import jwtDecode from "jwt-decode";
 import ClearSession from "../../security/ClearSession";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   ClearSession();
@@ -21,16 +21,17 @@ export default function Login() {
     e.preventDefault();
 
     axios
-      .post(`/api/v1/user/login`, { email, password })
+      .post(`/api/auth/login`, { username, password })
       .then((res) => {
         if (!res.data.error) {
-          Storage.set("user_id", { data: res.data.result.user_id });
-          Storage.set("username", { data: res.data.result.name });
-          Storage.set("role", { data: res.data.result.role });
+          const auth = jwtDecode(res.data.result.access_token);
 
-          Storage.setLogin(res.data.result.token);
+          Storage.set("user_id", { data: auth.uuid });
+          Storage.set("username", { data: auth.name });
+          Storage.set("role", { data: auth.role });
 
-          const auth = jwtDecode(Storage.getLogin());
+          Storage.setLogin(res.data.result.access_token);
+
           if (auth.role == "admin") {
             navigate("/dashboard");
           } else {
@@ -64,10 +65,11 @@ export default function Login() {
                       <Form.Group className="mb-3">
                         <Form.Control
                           type="text"
-                          name="email"
-                          onChange={(e) => setEmail(e.target.value)}
+                          name="username"
+                          onChange={(e) => setUsername(e.target.value)}
                           required
-                          placeholder="Email Address"
+                          placeholder="Username"
+                          autoFocus
                         />
                       </Form.Group>
 

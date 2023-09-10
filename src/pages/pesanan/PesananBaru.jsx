@@ -16,14 +16,14 @@ export default function PesananBaru() {
   const [order, setOrder] = useState([]);
 
   const getOrder = () => {
-    axios.get("/api/v1/order/menunggu_konfirmasi").then((response) => {
+    axios.get("/api/order/menunggu_konfirmasi").then((response) => {
       setOrder(response.data.result);
     });
   };
 
   const doProsesOrder = (orderCode) => {
     axios
-      .put(`/api/v1/order/${orderCode}/proses`)
+      .put(`/api/order/${orderCode}/proses`)
       .then(() => {
         swal({
           title: "Order Di Proses!",

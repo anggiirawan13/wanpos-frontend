@@ -14,7 +14,7 @@ export default function PesananSelesai() {
   const [order, setOrder] = useState([]);
 
   const getOrder = () => {
-    axios.get("/api/v1/order/selesai").then((response) => {
+    axios.get("/api/order/selesai").then((response) => {
       setOrder(response.data.result);
     });
   };

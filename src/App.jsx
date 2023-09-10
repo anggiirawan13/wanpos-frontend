@@ -87,7 +87,7 @@ function App() {
           />
           <Route
             exact
-            path="/company/:id_company"
+            path="/company/:code"
             element={
               <SecuredRoute
                 withLogin={true}
@@ -109,7 +109,7 @@ function App() {
           />
           <Route
             exact
-            path="/product/:id_product"
+            path="/product/:code"
             element={
               <SecuredRoute
                 withLogin={true}

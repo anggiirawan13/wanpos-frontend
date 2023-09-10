@@ -28,7 +28,7 @@ export default class Pesanan extends Component {
 
   componentDidMount() {
     axios
-      .get(`/api/v1/product`)
+      .get(`/api/product`)
       .then((res) => {
         const menus = res.data.result;
         this.setState({ menus });
@@ -37,14 +37,14 @@ export default class Pesanan extends Component {
         console.log(error);
       });
 
-    axios.get(`/api/v1/checkout/${Storage.get("user_id").data}`).then((res) => {
+    axios.get(`/api/checkout/${Storage.get("user_id").data}`).then((res) => {
       this.getListKeranjang();
     });
   }
 
   getListKeranjang = () => {
     axios
-      .get(`/api/v1/checkout/user/${Storage.get("user_id").data}`)
+      .get(`/api/checkout/user/${Storage.get("user_id").data}`)
       .then((res) => {
         const keranjangs = res.data.result;
         this.setState({ keranjangs });
@@ -70,7 +70,7 @@ export default class Pesanan extends Component {
       status: "menunggu_konfirmasi",
     };
 
-    axios.post(`api/v1/checkout/order`, form).then(() => {
+    axios.post(`api/checkout/order`, form).then(() => {
       swal({
         title: "Konfirmasi Berhasil!",
         text: "pesanan telah dikonfirmasi",

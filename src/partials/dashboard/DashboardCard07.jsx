@@ -10,7 +10,7 @@ function DashboardCard07() {
 
   const getTop = () => {
     axios
-      .get("/api/v1/checkout/top")
+      .get("/api/checkout/top")
       .then((res) => {
         setTop(res.data.result);
       })

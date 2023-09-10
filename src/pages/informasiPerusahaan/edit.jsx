@@ -7,10 +7,9 @@ import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 function EditPerusahaan() {
-  const { id_company } = useParams();
+  const { code } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,16 +17,16 @@ function EditPerusahaan() {
   }, []);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [companyName, setCompanyName] = useState("");
-  const [companyDesc, setCompanyDesc] = useState("");
-  const [companyAddress, setCompanyAddress] = useState("");
+  const [company_code, setCompanyCode] = useState("");
+  const [company_name, setCompanyName] = useState("");
+  const [company_address, setCompanyAddress] = useState("");
 
   const getCompanyById = async () => {
     try {
-      const response = await axios.get(`/api/v1/company/${id_company}`);
-      setCompanyName(response.data.result[0].name_company);
-      setCompanyDesc(response.data.result[0].desc_company);
-      setCompanyAddress(response.data.result[0].alamat);
+      const response = await axios.get(`/api/company/${code}`);
+      setCompanyCode(response.data.result.company_code);
+      setCompanyName(response.data.result.company_name);
+      setCompanyAddress(response.data.result.company_address);
     } catch (error) {
       console.log("error", error);
     }
@@ -37,19 +36,25 @@ function EditPerusahaan() {
     e.preventDefault();
     try {
       axios
-        .put(`/api/v1/company/${id_company}`, {
-          companyName,
-          companyDesc,
-          companyAddress,
+        .put(`/api/company`, {
+          company_code,
+          company_name,
+          company_address,
         })
-        .then(() => {
+        .then((res) => {
           swal({
-            title: "Update Berhasil!",
-            text: "perusahaan berhasil di update",
+            title: res.data.messages,
             icon: "success",
             timer: 1500,
           }).then(() => {
             navigate("/company");
+          });
+        })
+        .catch((err) => {
+          swal({
+            title: err.data.messages,
+            icon: "error",
+            timer: 1500,
           });
         });
     } catch (error) {
@@ -70,7 +75,7 @@ function EditPerusahaan() {
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <h2 className="font-semibold text-slate-900 mb-3 dark:text-slate-100">
-              Informasi Perusahaan
+              Data Company
             </h2>
 
             {/* Dashboard actions */}
@@ -80,33 +85,34 @@ function EditPerusahaan() {
 
                 <Form onSubmit={updateCompany}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Nama Perusahaan</Form.Label>
+                    <Form.Label>Company Code</Form.Label>
                     <Form.Control
                       type="text"
-                      value={companyName}
-                      name="name_company"
+                      value={company_code}
+                      name="company_code"
+                      onChange={(e) => setCompanyCode(e.target.value)}
+                      placeholder="Enter"
+                      disabled
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Company Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={company_name}
+                      name="company_name"
                       onChange={(e) => setCompanyName(e.target.value)}
                       placeholder="Enter"
                     />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Deskripsi Perusahaan</Form.Label>
+                    <Form.Label>Company Address</Form.Label>
                     <Form.Control
                       type="text"
-                      value={companyDesc}
-                      name="desc_company"
-                      onChange={(e) => setCompanyDesc(e.target.value)}
-                      placeholder="Enter"
-                    />
-                  </Form.Group>
-
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Team</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={companyAddress}
-                      name="alamat"
+                      value={company_address}
+                      name="company_address"
                       onChange={(e) => setCompanyAddress(e.target.value)}
                       placeholder="Enter"
                     />
@@ -115,14 +121,14 @@ function EditPerusahaan() {
                     to={`/company`}
                     className="btn bg-secondary text-white mr-2"
                   >
-                    Kembali
+                    Back
                   </Link>
                   <Button
                     variant="primary"
                     type="submit"
                     className="bg-primary"
                   >
-                    Ubah
+                    Save
                   </Button>
                 </Form>
               </div>

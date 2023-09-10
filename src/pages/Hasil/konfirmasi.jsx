@@ -17,7 +17,7 @@ export default class Konfirmasi extends Component {
   }
 
   componentDidMount() {
-    axios.get("/api/v1/order/menunggu_konfirmasi").then((response) => {
+    axios.get("/api/order/menunggu_konfirmasi").then((response) => {
       const order = response.data.result;
       this.setState({
         order,

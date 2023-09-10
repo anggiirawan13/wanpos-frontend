@@ -16,14 +16,14 @@ export default function PesananProses() {
   const [order, setOrder] = useState([]);
 
   const getOrder = () => {
-    axios.get("/api/v1/order/proses").then((response) => {
+    axios.get("/api/order/proses").then((response) => {
       setOrder(response.data.result);
     });
   };
 
   const doSelesaiOrder = (idOrder) => {
     axios
-      .put(`/api/v1/order/${idOrder}/selesai`)
+      .put(`/api/order/${idOrder}/selesai`)
       .then(() => {
         swal({
           title: "Order Selesai!",

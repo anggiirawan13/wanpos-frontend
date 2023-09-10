@@ -34,9 +34,9 @@ function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [show, setShow] = useState(false);
 
-  const [name_company, setName] = useState("");
-  const [desc_company, setDescName] = useState("");
-  const [alamat, setAlamat] = useState("");
+  const [company_code, setCompanyCode] = useState("");
+  const [company_name, setCompanyName] = useState("");
+  const [company_address, setCompanyAddress] = useState("");
 
   const navigate = useNavigate();
 
@@ -46,13 +46,20 @@ function Dashboard() {
   const saveData = async (e) => {
     e.preventDefault();
     await axios
-      .post("api/v1/company", { name_company, desc_company, alamat })
+      .post("/api/company", { company_code, company_name, company_address })
       .then((res) => {
-        if (res.data.error === false) {
-          toast.success("Berhasil Menambahkan Data Perusahaan");
-          navigate("/company");
+        if (res.data.success) {
+          swal({
+            title: res.data.messages,
+            icon: "success",
+          }).then(() => {
+            handleClose();
+          });
         } else {
-          toast.warning("Berhasil");
+          swal({
+            title: res.data.messages,
+            icon: "error",
+          });
         }
       });
   };
@@ -84,46 +91,40 @@ function Dashboard() {
                   className="bg-primary"
                   onClick={handleShow}
                 >
-                  Buat data perusahan
+                  Create Data Company
                 </Button>
 
                 <Modal show={show} onHide={handleClose} animation={false}>
                   <Modal.Header closeButton>
-                    <Modal.Title>Data Perusahaan</Modal.Title>
+                    <Modal.Title>Create Data Company</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                     <Form onSubmit={saveData}>
                       <Form.Group className="mb-3">
-                        <Form.Label>Nama Perusahaan</Form.Label>
+                        <Form.Label>Company Code</Form.Label>
                         <Input
                           type="text"
-                          name="name_company"
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                        {/* <Form.Control
-                          type="text"
-                          value={name}
-                          name="name_company"
-                          onChange={ e => setName(e.target.value)}
-                          placeholder="Enter"
-                        /> */}
-                      </Form.Group>
-
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Deskripsi Perusahaan</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="desc_company"
-                          onChange={(e) => setDescName(e.target.value)}
+                          name="company_code"
+                          onChange={(e) => setCompanyCode(e.target.value)}
+                          autoFocus
                         />
                       </Form.Group>
 
                       <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Alamat</Form.Label>
+                        <Form.Label>Company Name</Form.Label>
                         <Form.Control
                           type="text"
-                          name="alamat"
-                          onChange={(e) => setAlamat(e.target.value)}
+                          name="company_name"
+                          onChange={(e) => setCompanyName(e.target.value)}
+                        />
+                      </Form.Group>
+
+                      <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Company Address</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="company_address"
+                          onChange={(e) => setCompanyAddress(e.target.value)}
                         />
                       </Form.Group>
 
@@ -132,7 +133,7 @@ function Dashboard() {
                         className="bg-primary"
                         type="submit"
                       >
-                        Tambah Data
+                        Save
                       </Button>
                       <Button
                         variant="secondary"
