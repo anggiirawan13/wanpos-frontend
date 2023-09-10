@@ -10,17 +10,17 @@ function numberWithComas(x) {
 
 export default class totalBayar extends Component {
   render() {
-    const totalBayar = this.props.keranjangs
-      ? this.props.keranjangs.reduce((result, item) => {
-          return result + parseInt(item.total_harga);
-        }, 0)
-      : 0;
+    let totalBayar = 0;
+    this.props.keranjangs.forEach(
+      (item) => (totalBayar += item.selling_price * item.quantity)
+    );
+
     return (
       <div className="fixed-bottom">
         <Row>
           <Col md={{ span: 3, offset: 9 }} className="px-4">
             <h4 className="text-bold" style={{ marginLeft: "-60px" }}>
-              Total bayar:{" "}
+              Net Amount:{" "}
               <strong style={{ marginLeft: "70px" }}>
                 Rp. {totalBayar ? numberWithComas(totalBayar) : 0}
               </strong>

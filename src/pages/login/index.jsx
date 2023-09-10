@@ -21,12 +21,13 @@ export default function Login() {
     e.preventDefault();
 
     axios
-      .post(`/api/auth/login`, { username, password })
+      .post("/api/auth/login", { username, password })
       .then((res) => {
-        if (!res.data.error) {
+        if (res.data.success) {
           const auth = jwtDecode(res.data.result.access_token);
 
           Storage.set("user_id", { data: auth.uuid });
+          Storage.set("company", { data: auth.company });
           Storage.set("username", { data: auth.name });
           Storage.set("role", { data: auth.role });
 

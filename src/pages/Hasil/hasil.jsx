@@ -121,7 +121,7 @@ export default class hasil extends Component {
     return (
       <Col md={3} mt={"2"}>
         <h2 className="font-semibold mt-3 text-slate-900 mb-3 dark:text-slate-100">
-          <strong>Hasil</strong>
+          <strong>Cart</strong>
           <hr />
         </h2>
         {keranjangs ? (
@@ -136,20 +136,20 @@ export default class hasil extends Component {
                     <Col xl="2">
                       <h2 className="font-semibold mt-3 text-slate-900 mb-3 dark:text-slate-100">
                         <Badge pill variant="success">
-                          {menuKerajang.jumlah}
+                          {menuKerajang.quantity}
                         </Badge>
                       </h2>
                     </Col>
                     <Col>
                       <h5 className="dark:text-indigo-200 mb-2">
-                        {menuKerajang.name_products}
+                        {menuKerajang.product_name}
                       </h5>
                       <span
                         className="dark:text-indigo-200 mb-2"
                         style={{ fontSize: "12px" }}
                       >
-                        Rp. {numberWithComas(menuKerajang.harga)} x{" "}
-                        {menuKerajang.jumlah}
+                        Rp. {numberWithComas(menuKerajang.selling_price)} x{" "}
+                        {menuKerajang.quantity}
                       </span>
                     </Col>
                     <Col>
@@ -158,7 +158,10 @@ export default class hasil extends Component {
                         style={{ fontSize: "14px" }}
                       >
                         <strong className="float-right">
-                          Rp. {numberWithComas(menuKerajang.total_harga)}
+                          Rp.{" "}
+                          {numberWithComas(
+                            menuKerajang.selling_price * menuKerajang.quantity
+                          )}
                         </strong>
                       </span>
                     </Col>

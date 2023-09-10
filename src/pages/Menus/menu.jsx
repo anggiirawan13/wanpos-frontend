@@ -16,22 +16,22 @@ const menu = ({ menus, masukKeranjang }) => {
 
         <Card.Body>
           <Card.Title>
-            {menus.name_products} - {menus.kode}{" "}
+            {menus.product_code} - {menus.product_name}
           </Card.Title>
           <span className="dark:text-indigo-200 mb-2">
-            {menus.desc_products}
+            {menus.product_name}
           </span>
           <Card.Text>
-            <>Rp. {menus.harga ? numberWithComas(menus.harga) : 0}</>
+            <>Rp. {numberWithComas(menus.selling_price)}</>
           </Card.Text>
           <Card.Text>
             <span className="dark:text-indigo-200 mb-2">
               {" "}
-              Stock Tersedia : {menus.stock}
+              Stock : {menus.stock}
             </span>
           </Card.Text>
           <Button type="input" variant="primary">
-            Beli Sekarang
+            Buy Now
           </Button>
         </Card.Body>
       </Card>

@@ -1,40 +1,48 @@
 import React from "react";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { Input } from "@material-tailwind/react";
 import Button from "react-bootstrap/Button";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-export default function Signup() {
-  const [values, setValues] = useState({
-    username: "",
-    noTlp: "",
-    email: "",
-    alamat: "",
-    password: "",
-    role: "client",
-  });
-
+const Signup = () => {
   const navigate = useNavigate();
 
-  const handleInput = (event) => {
-    setValues((prev) => ({
-      ...prev,
-      [event.target.name]: [event.target.value],
-    }));
-  };
+  const role = "client";
+  const status = "active";
+
+  let [user_code, setUserCode] = useState("");
+  let [username, setUsername] = useState("");
+  let [fullName, setFullName] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [retype_password, setRetypePassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post(`api/user`, values).then((res) => {
-      toast.success(res.data.message);
-      navigate("/login");
-    });
+    axios
+      .post("/api/auth/register", {
+        user_code,
+        username,
+        fullName,
+        email,
+        password,
+        retype_password,
+        role,
+        status,
+      })
+      .then((res) => {
+        swal({
+          title: res.data.messages,
+          icon: "success",
+          timer: 1500,
+        }).then(() => {
+          navigate("/login");
+        });
+      });
   };
 
   return (
@@ -61,8 +69,20 @@ export default function Signup() {
                         <Form.Group className="mb-3">
                           <Form.Control
                             type="text"
+                            name="user_code"
+                            onChange={(e) => setUserCode(e.target.value)}
+                            required
+                            placeholder="User Code"
+                            autoFocus
+                          />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="text"
                             name="username"
-                            onChange={handleInput}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
                             placeholder="Username"
                           />
                         </Form.Group>
@@ -70,18 +90,10 @@ export default function Signup() {
                         <Form.Group className="mb-3">
                           <Form.Control
                             type="text"
-                            name="alamat"
-                            onChange={handleInput}
-                            placeholder="Address"
-                          />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            type="text"
-                            name="noTlp"
-                            onChange={handleInput}
-                            placeholder="No Tlp"
+                            name="fullName"
+                            onChange={(e) => setFullName(e.target.value)}
+                            required
+                            placeholder="FullName"
                           />
                         </Form.Group>
                       </Col>
@@ -91,7 +103,7 @@ export default function Signup() {
                           <Form.Control
                             type="text"
                             name="email"
-                            onChange={handleInput}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                             placeholder="Email Address"
                           />
@@ -101,9 +113,19 @@ export default function Signup() {
                           <Form.Control
                             type="password"
                             name="password"
-                            onChange={handleInput}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                             placeholder="Password"
+                          />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                          <Form.Control
+                            type="password"
+                            name="retype_password"
+                            onChange={(e) => setRetypePassword(e.target.value)}
+                            required
+                            placeholder="Retype Password"
                           />
                         </Form.Group>
                       </Col>
@@ -136,4 +158,6 @@ export default function Signup() {
       </Container>
     </>
   );
-}
+};
+
+export default Signup;
